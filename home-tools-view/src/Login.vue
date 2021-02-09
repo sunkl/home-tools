@@ -1,10 +1,7 @@
 <template>
   <div id="login" class="login_div">
     <div class="input_div">
-      <el-row>
-        <el-input class="tex_input" v-model="username" prefix-icon="el-icon-s-custom" placeholder="请输入用户名">
-        </el-input>
-      </el-row>
+        <el-input class="tex_input" v-model="username" prefix-icon="el-icon-s-custom" placeholder="请输入用户名"></el-input>
     </div>
     <div class="input_div">
       <el-input class="tex_input" v-model="password" show-password="true" prefix-icon="el-icon-unlock" placeholder="请输入密码"></el-input>
