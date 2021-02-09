@@ -1,0 +1,26 @@
+{
+  "name": "home_tools",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sunkl/home_tools.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sunkl/home_tools/issues"
+  },
+  "homepage": "https://github.com/sunkl/home_tools#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "babel-plugin-component": "^1.1.1",
+    "element-ui": "^2.15.0",
+    "vue": "^2.6.12"
+  }
+}
