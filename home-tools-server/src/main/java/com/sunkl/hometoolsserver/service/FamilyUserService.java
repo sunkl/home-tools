@@ -20,4 +20,8 @@ public class FamilyUserService {
         }
         return result;
     }
+
+    public boolean insertInto(FamilyUser familyUser) {
+        return familyUserMapper.insert(familyUser) > 0;
+    }
 }

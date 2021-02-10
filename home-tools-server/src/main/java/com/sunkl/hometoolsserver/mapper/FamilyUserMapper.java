@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 @Mapper
 public interface FamilyUserMapper {
     int countByExample(FamilyUserExample example);
@@ -33,5 +32,4 @@ public interface FamilyUserMapper {
     int updateByPrimaryKeySelective(FamilyUser record);
 
     int updateByPrimaryKey(FamilyUser record);
-
 }
