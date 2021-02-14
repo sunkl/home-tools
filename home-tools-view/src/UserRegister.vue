@@ -155,19 +155,27 @@
         this.check_user_pass_re()
         this.check_nice_name()
         if (this.user_name_check && this.user_role_check && this.user_phone_check && this.user_pass_check && this.user_pass_re_check) {
+          console.log("检验通过")
           axios.get("http://localhost:8080/api/family_user/register", {
             params: {
               "username": this.username,
-              "passwd": this.password,
-              "rule": this.user_role,
+              "passwd": this.user_pass,
+              "role": this.user_role,
               "birth_day": this.user_birth,
               "nice_name": this.nice_name,
-              "phone": this.phone
+              "phone": this.user_phone
             }
           }).then(resp => {
             this.respData = resp.data.toString()
             if (this.respData === "false") {
               this.errorMesg = "注册失败！"
+            }else{
+              this.$alert("用户名"+this.username+"注册成功，将跳转到登陆界面！","注册成功",{
+                confirmButtonText:"确认",
+                callback:action => {
+                  this.$router.push("/")
+                }
+              })
             }
           })
         } else {
