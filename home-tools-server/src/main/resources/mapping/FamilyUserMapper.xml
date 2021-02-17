@@ -13,13 +13,24 @@
         <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
     </resultMap>
+    <select id="selectUserByCondition" resultType="com.sunkl.hometoolsserver.dao.FamilyUser">
+        select *
+        from family_user
+        where nice_name like '%f%'
+           or nice_name like '#{condition_str}'
+    </select>
+    <select id="selectUserByColName" resultMap="BaseResultMap">
+        select *
+        from family_user
+        where ${col_name} like '%${col_value}%'
+    </select>
     <select id="selectByUserNameAndPasswd" resultMap="BaseResultMap">
         select *
         from family_user
         where user_name = #{username}
           and passwd = #{passwd}
     </select>
-     <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.FamilyUser">
+    <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.FamilyUser">
         insert into family_user (user_id, user_name, passwd,
                                  user_role, user_auth, nice_name,
                                  phone, birth_day, create_time,
@@ -31,7 +42,8 @@
     </insert>
 
     <sql id="Base_Column_List_unId">
-        user_name, passwd, user_role, user_auth, nice_name, phone, birth_day, create_time,update_time
+        user_name
+        , passwd, user_role, user_auth, nice_name, phone, birth_day, create_time,update_time
     </sql>
     <sql id="Base_Column_List">
         user_id

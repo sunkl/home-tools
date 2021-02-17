@@ -1,6 +1,10 @@
 package com.sunkl.hometoolsserver.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.sunkl.hometoolsserver.dao.FamilyUser;
 import com.sunkl.hometoolsserver.service.FamilyUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/family_user")
@@ -49,5 +54,15 @@ public class FamliyUserController {
                 currentTime,
                 currentTime
         ));
+    }
+
+    @CrossOrigin
+    @GetMapping("/user_query")
+    public String getUserByColNameAndKey(@RequestParam("col_name") String[] colName, @RequestParam("key") String key) throws JsonProcessingException {
+        List<FamilyUser> users = familyUserService.findUserByColName(colName[0], key);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setPropertyNamingStrategy(com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE);
+        String json = mapper.writeValueAsString(users);
+        return json;
     }
 }

@@ -21,6 +21,14 @@ public class FamilyUserService {
         return result;
     }
 
+    public List<FamilyUser> findUserByCondition(String condition) {
+        return familyUserMapper.selectUser();
+    }
+
+    public List<FamilyUser> findUserByColName(String colName, String key) {
+        return familyUserMapper.selectUserByColName(colName, key);
+    }
+
     public boolean insertInto(FamilyUser familyUser) {
         return familyUserMapper.insert(familyUser) > 0;
     }

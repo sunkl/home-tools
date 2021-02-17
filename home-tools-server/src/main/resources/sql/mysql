@@ -10,6 +10,44 @@ CREATE TABLE `family_user` (
    PRIMARY KEY (`user_id`)
  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 
+CREATE TABLE `stock_holder_change` (
+  `shcode` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+  `company_code` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '公司代码',
+  `scode` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '股票代码',
+  `close` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '最后收盘价',
+  `change_percent` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '涨跌幅',
+  `sname` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '公司名称',
+  `share_hd_name` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '股东名字',
+  `increase_or_decrease` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '增减',
+  `change_num` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变动数量（万股）持股变动信息',
+  `proportion_in_circulating_shares` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '占流通股比例（%）持股变动信息',
+  `market_level` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '市场级别 ',
+  `total_shareholding_after_change` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 持股总数（万股）变动后持股情况',
+  `ratio_of_total_equity_after_change` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '占总股本比率（%） 变动后持股情况',
+  `num_shares_in_circulation_after_change` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 持流通股数（万股） 变动后持股情况',
+  `proportion_circulating_shares_after_change` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '占流通股比例（%） 变动后持股情况',
+  `change_start_date` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变动开始日期',
+  `change_end_date` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 变动截止日期',
+  `notice_date` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '公告日期',
+  `proportion_in_total_share_capital` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 占总股本比例（%）持股变动信息'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+CREATE TABLE `stock_holding_change_senior_managerment` (
+  `change_ratio` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+  `holder_name` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '董监高人员姓名',
+  `stock_code` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
+  `change_person` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变更人',
+  `stock_hold_type` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 持股种类',
+  `change_date` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 日期',
+  `num_share_afer_change` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 变动后持股数',
+  `num_of_changed_shares` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变动股数',
+  `average_transaction_price` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 成交均价',
+  `name` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 名称',
+  `relationship_between_senior_manager` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 变动人与董监高的关系',
+  `reason_of_change` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变动原因',
+  `change_amount` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变动金额',
+  `job` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '职务'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='高管持股变更信息';
 
 
  CREATE TABLE `tools_model_config` (
