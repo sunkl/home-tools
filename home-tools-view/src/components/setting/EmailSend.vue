@@ -2,7 +2,8 @@
   <div>
     <div class="search_div">
       <div style="margin-top: 15px;">
-        <el-select v-model="selectType" clearable class="selectType" v-on:change="onselectKeyTypeChange(key_tmp)" placeholder="请选择">
+        <el-select v-model="selectType" clearable class="selectType" v-on:change="onselectKeyTypeChange()"
+                   placeholder="请选择">
           <el-option
             v-for="item in selectTypeOptions"
             :key="item.value"
@@ -53,39 +54,30 @@ export default {
       searchKey: ''
     }
   },
+  mounted() {
+    /**初始化选择框选项*/
+    this.updateSearchSelect('')
+  },
   methods: {
-    onselectKeyTypeChange(key_tmp) {
-      console.log("change select type ...")
-      axios.get("http://localhost:8080/api/family_user/user_query", {
-        params: {
-          "col_name": this.selectType,
-          "key": ''
-        }
-      }).then(resp => {
-        this.searchMatchKeys=[]
-        var respData = resp.data
-        for (var i = 0; i < respData.length; i++) {
-          var tmp_value=(respData[i])[this.selectType]
-          var user_id = (respData[i])['user_id']
-          var tmp ={"value":user_id,"label":tmp_value}
-          console.log(tmp)
-          this.searchMatchKeys.push(tmp)
-        }
-      })
+    onselectKeyTypeChange() {
+      this.updateSearchSelect('')
     },
     onInputSearchKey(key) {
+     this.updateSearchSelect(key)
+    },
+    updateSearchSelect(key) {
       axios.get("http://localhost:8080/api/family_user/user_query", {
         params: {
           "col_name": this.selectType,
           "key": key
         }
       }).then(resp => {
-        this.searchMatchKeys=[]
+        this.searchMatchKeys = []
         var respData = resp.data
         for (var i = 0; i < respData.length; i++) {
-          var tmp_value=(respData[i])[this.selectType]
+          var tmp_value = (respData[i])[this.selectType]
           var user_id = (respData[i])['user_id']
-          var tmp ={"value":user_id,"label":tmp_value}
+          var tmp = {"value": user_id, "label": tmp_value}
           console.log(tmp)
           this.searchMatchKeys.push(tmp)
         }
