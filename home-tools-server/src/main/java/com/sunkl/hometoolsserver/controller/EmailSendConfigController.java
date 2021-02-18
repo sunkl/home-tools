@@ -43,32 +43,35 @@ public class EmailSendConfigController {
             }
             if (map.containsKey("stock_hold_change")) {
                 EmailSendConfig emailSendConfig = map.get("stock_hold_change");
-                emailSendConfig.upsertItemMsg(stockCode);
-                emailSendConfig.setUpdateTime(currentDateTime);
-                updateNum += emailSendConfigService.updateByPrimaryId(emailSendConfig);
+                if (emailSendConfig.upsertItemMsg(stockCode)) {
+                    emailSendConfig.setUpdateTime(currentDateTime);
+                    updateNum += emailSendConfigService.updateByPrimaryId(emailSendConfig);
+                }
             } else {
                 EmailSendConfig emailSendConfig = new EmailSendConfig(-1, new Integer(userId), "stock_hold_change", "", "", "", stockCode, currentDateTime, currentDateTime);
                 updateNum += emailSendConfigService.insertInto(emailSendConfig);
             }
             if (map.containsKey("stock_hold_change_senior_manager")) {
                 EmailSendConfig emailSendConfig = map.get("stock_hold_change_senior_manager");
-                emailSendConfig.upsertItemMsg(stockCode);
-                emailSendConfig.setUpdateTime(currentDateTime);
-                updateNum +=  emailSendConfigService.updateByPrimaryId(emailSendConfig);
+                if (emailSendConfig.upsertItemMsg(stockCode)) {
+                    emailSendConfig.setUpdateTime(currentDateTime);
+                    updateNum += emailSendConfigService.updateByPrimaryId(emailSendConfig);
+                }
             } else {
                 EmailSendConfig emailSendConfig = new EmailSendConfig(-1, new Integer(userId), "stock_hold_change_senior_manager", "", "", "", stockCode, currentDateTime, currentDateTime);
-                updateNum +=  emailSendConfigService.insertInto(emailSendConfig);
+                updateNum += emailSendConfigService.insertInto(emailSendConfig);
             }
             if (map.containsKey("notice_msg")) {
                 EmailSendConfig emailSendConfig = map.get("notice_msg");
-                emailSendConfig.upsertItemMsg(stockCode);
-                emailSendConfig.setUpdateTime(currentDateTime);
-                updateNum += emailSendConfigService.updateByPrimaryId(emailSendConfig);
+                if (emailSendConfig.upsertItemMsg(stockCode)) {
+                    emailSendConfig.setUpdateTime(currentDateTime);
+                    updateNum += emailSendConfigService.updateByPrimaryId(emailSendConfig);
+                }
             } else {
                 EmailSendConfig emailSendConfig = new EmailSendConfig(-1, new Integer(userId), "notice_msg", "", "", "", stockCode, currentDateTime, currentDateTime);
                 updateNum += emailSendConfigService.insertInto(emailSendConfig);
             }
         }
-        return  updateNum+"";
+        return updateNum + "";
     }
 }

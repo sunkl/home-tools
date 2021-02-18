@@ -45,13 +45,19 @@ public class EmailSendConfig {
     public void setItemType(String itemType) {
         this.itemType = itemType == null ? null : itemType.trim();
     }
-    public void upsertItemMsg(String stockCode){
+
+    public boolean upsertItemMsg(String stockCode) {
         if (this.getItemMessage() == null || this.getItemMessage().trim().isEmpty()) {
             this.setItemMessage(stockCode);
+            return true;
         } else if (!Arrays.asList(this.getItemMessage().split(",")).contains(stockCode)) {
             this.setItemMessage(this.getItemMessage() + "," + stockCode);
+            return true;
+        } else {
+            return false;
         }
     }
+
     public String getConditionStr() {
         return conditionStr;
     }

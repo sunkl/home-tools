@@ -50,18 +50,18 @@
               <el-table-column prop="stock_name" label="公司名称" width="180"></el-table-column>
               <el-table-column prop="stock_holding_change" label="大股东持股变更">
                 <template slot-scope="scope">
-                  <el-switch v-model="stock_holding_change[scope.index]" active-text="开" inactive-text="关"></el-switch>
+                  <el-switch v-model="scope.row.stock_holding_change" active-text="开" inactive-text="关"></el-switch>
                 </template>
               </el-table-column>
               <el-table-column prop="stock_holding_change_senior_managerment" label="高管持股变更">
                 <template slot-scope="scope">
-                  <el-switch v-model="stock_holding_change_senior_managerment[scope.index]" active-text="开"
+                  <el-switch v-model="scope.row.stock_holding_change_senior_managerment" active-text="开"
                              inactive-text="关"></el-switch>
                 </template>
               </el-table-column>
               <el-table-column prop="company_announcement" label="企业公告">
                 <template slot-scope="scope">
-                  <el-switch v-model="company_announcement[scope.index]" active-text="开" inactive-text="关"></el-switch>
+                  <el-switch v-model="scope.row.company_announcement" active-text="开" inactive-text="关"></el-switch>
                 </template>
               </el-table-column>
               <el-table-column prop="option" label="删除">
@@ -127,9 +127,6 @@ export default {
       show_phone: '',
       show_email: '',
       stock_table_data: [],
-      stock_holding_change_senior_managerment: [],
-      stock_holding_change: [],
-      company_announcement: [],
       stock_search_type: 'stock_code',
       stock_search_type_option: [
         {
@@ -142,7 +139,8 @@ export default {
       ],
       stock_search_key: '',
       stock_search_match_keys: [],
-      stock_search_is_show: false
+      stock_search_is_show: false,
+      tmp_stock_detail_object: {}
     }
   },
   mounted() {
@@ -201,7 +199,6 @@ export default {
     addStockToTable() {
       let user_id = this.searchKey
       if (user_id !== '') {
-        console.log("find stock_detail_id:"+this.stock_search_key)
         axios.get("http://localhost:8080/api/family_user/queryStockByStockDetailId", {
           params: {
             "stock_detail_id": this.stock_search_key
@@ -210,7 +207,10 @@ export default {
           this.searchMatchKeys = []
           let respData = resp.data
           if (respData.length > 0) {
-            this.stock_table_data.push(respData[0])
+            this.tmp_stock_detail_object = respData[0]
+            this.tmp_stock_detail_object.stock_holding_change = true
+            this.tmp_stock_detail_object.stock_holding_change_senior_managerment = true
+            this.tmp_stock_detail_object.company_announcement = true
           }
         })
         let stock_detail_id = this.stock_search_key
@@ -220,10 +220,13 @@ export default {
             "user_id": user_id
           }
         }).then(resp => {
-          console.log("upsert_date:" + resp.data)
+          console.log(resp.data)
+          if(resp.data===3){
+            this.stock_table_data.push(this.tmp_stock_detail_object)
+          }
         })
         this.stock_search_is_show = false
-      }else{
+      } else {
         alert("请选择操作用户！")
       }
     },
