@@ -62,18 +62,18 @@ CREATE TABLE `stock_holding_change_senior_managerment` (
     PRIMARY KEY (`tools_id`)
   ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin
 
- CREATE TABLE `email_send_config` (
-    `email_send_config_id` int(11) NOT NULL AUTO_INCREMENT,
-    `user_id` int(11) DEFAULT NULL,
-    `item_type` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '信息项',
-    `condition` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '触发条件',
-    `date_range` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '时间范围',
-    `date_range_col_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '时间列',
-    `item_message` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '子项信息',
-    `create_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-    `update_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
-    PRIMARY KEY (`email_send_config_id`)
-  ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `email_send_config` (
+  `email_send_config_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `item_type` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '信息项',
+  `condition_str` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '触发条件',
+  `date_range` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '时间范围',
+  `date_range_col_name` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '时间列',
+  `item_message` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '子项信息',
+  `create_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `update_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`email_send_config_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `stock_detail` (
   `stock_detail_id` int(11) NOT NULL,
