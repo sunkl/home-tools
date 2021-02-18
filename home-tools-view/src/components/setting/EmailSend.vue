@@ -100,108 +100,108 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    name: "EmailSent",
-    data() {
-      return {
-        value1: true,
-        selectType: 'nice_name',
-        selectTypeOptions: [{
-          value: 'nice_name',
-          label: '昵称'
+export default {
+  name: "EmailSent",
+  data() {
+    return {
+      value1: true,
+      selectType: 'nice_name',
+      selectTypeOptions: [{
+        value: 'nice_name',
+        label: '昵称'
+      }, {
+        value: 'phone',
+        label: '用户电话'
+      }, {
+        value: 'user_email',
+        label: '用户邮箱'
+      }, {
+        value: 'user_role',
+        label: '用户角色'
+      }],
+      searchMatchKeys: [{}],
+      searchKey: '',
+      show_nice_name: '',
+      show_phone: '',
+      show_email: '',
+      stock_table_data: [],
+      stock_holding_change_senior_managerment: [],
+      stock_holding_change: [],
+      company_announcement: [],
+      stock_search_type: 'stock_code',
+      stock_search_type_option: [
+        {
+          value: 'stock_code',
+          label: '股票代码'
         }, {
-          value: 'phone',
-          label: '用户电话'
-        }, {
-          value: 'user_email',
-          label: '用户邮箱'
-        }, {
-          value: 'user_role',
-          label: '用户角色'
-        }],
-        searchMatchKeys: [{}],
-        searchKey: '',
-        show_nice_name: '',
-        show_phone: '',
-        show_email: '',
-        stock_table_data: [{
-          "stock_code": "100001",
-          "stock_name": "晨鸣造纸"
-        }],
-        stock_holding_change_senior_managerment: [],
-        stock_holding_change: [],
-        company_announcement: [],
-        stock_search_type: 'stock_code',
-        stock_search_type_option: [
-          {
-            value: 'stock_code',
-            label: '股票代码'
-          }, {
-            value: 'stock_name',
-            label: '公司名称'
-          }
-        ],
-        stock_search_key: '',
-        stock_search_match_keys: [],
-        stock_search_is_show: false
-      }
+          value: 'stock_name',
+          label: '公司名称'
+        }
+      ],
+      stock_search_key: '',
+      stock_search_match_keys: [],
+      stock_search_is_show: false
+    }
+  },
+  mounted() {
+    /**初始化选择框选项*/
+    this.updateSearchSelect('')
+  },
+  methods: {
+    show_stock_search_div() {
+      this.stock_search_is_show = true
     },
-    mounted() {
-      /**初始化选择框选项*/
+    tableRowClassName() {
+
+    },
+    onselectKeyTypeChange() {
       this.updateSearchSelect('')
     },
-    methods: {
-      show_stock_search_div() {
-        this.stock_search_is_show = true
-      },
-      tableRowClassName() {
-
-      },
-      onselectKeyTypeChange() {
-        this.updateSearchSelect('')
-      },
-      onInputSearchKey(key) {
-        this.updateSearchSelect(key)
-      },
-      onSelectUser() {
-        console.log("searchKey:" + this.searchKey)
-        axios.get("http://localhost:8080/api/family_user/queryUserById", {
-          params: {
-            "user_id": this.searchKey
-          }
-        }).then(resp => {
-          let users = resp.data
-          if (users.length > 0) {
-            let selectObject = users[0]
-            this.show_email = selectObject['user_email']
-            this.show_phone = selectObject['phone']
-            this.show_nice_name = selectObject['nice_name']
-            console.log(selectObject)
-          }
-        })
-      },
-      onInputSearchStockKey(stock_key) {
-        axios.get("http://localhost:8080/api/family_user/qeuryStockDetailByColName", {
-          params: {
-            "col_name": this.stock_search_type,
-            "col_value": stock_key
-          }
-        }).then(resp => {
-          this.stock_search_match_keys = []
-          let respData = resp.data
-          console.log(respData)
-          for (let i = 0; i < respData.length; i++) {
-            let colValue = (respData[i])[this.stock_search_type]
-            let stock_detail_id = (respData[i])['stock_detail_id']
-            let tmp = {"value": stock_detail_id, "label": colValue}
-            console.log(tmp)
-            this.stock_search_match_keys.push(tmp)
-          }
-        })
-      },
-      addStockToTable() {
+    onInputSearchKey(key) {
+      this.updateSearchSelect(key)
+    },
+    onSelectUser() {
+      console.log("searchKey:" + this.searchKey)
+      axios.get("http://localhost:8080/api/family_user/queryUserById", {
+        params: {
+          "user_id": this.searchKey
+        }
+      }).then(resp => {
+        let users = resp.data
+        if (users.length > 0) {
+          let selectObject = users[0]
+          this.show_email = selectObject['user_email']
+          this.show_phone = selectObject['phone']
+          this.show_nice_name = selectObject['nice_name']
+          console.log(selectObject)
+        }
+      })
+    },
+    onInputSearchStockKey(stock_key) {
+      axios.get("http://localhost:8080/api/family_user/qeuryStockDetailByColName", {
+        params: {
+          "col_name": this.stock_search_type,
+          "col_value": stock_key
+        }
+      }).then(resp => {
+        this.stock_search_match_keys = []
+        let respData = resp.data
+        console.log(respData)
+        for (let i = 0; i < respData.length; i++) {
+          let colValue = (respData[i])[this.stock_search_type]
+          let stock_detail_id = (respData[i])['stock_detail_id']
+          let tmp = {"value": stock_detail_id, "label": colValue}
+          console.log(tmp)
+          this.stock_search_match_keys.push(tmp)
+        }
+      })
+    },
+    addStockToTable() {
+      let user_id = this.searchKey
+      if (user_id !== '') {
+        console.log("find stock_detail_id:"+this.stock_search_key)
         axios.get("http://localhost:8080/api/family_user/queryStockByStockDetailId", {
           params: {
             "stock_detail_id": this.stock_search_key
@@ -210,56 +210,63 @@
           this.searchMatchKeys = []
           let respData = resp.data
           if (respData.length > 0) {
-            let stock_code = respData[0]['stock_code']
-            let stock_name = respData[0]['stock_name']
-            this.stock_table_data.push({
-              "stock_code": stock_code,
-              "stock_name": stock_name
-            })
+            this.stock_table_data.push(respData[0])
           }
         })
-        this.stock_search_is_show = false
-      },
-      updateSearchSelect(key) {
-        axios.get("http://localhost:8080/api/family_user/user_query", {
+        let stock_detail_id = this.stock_search_key
+        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/upsertAllItemEmpy", {
           params: {
-            "col_name": this.selectType,
-            "key": key
+            "stock_detail_id": stock_detail_id,
+            "user_id": user_id
           }
         }).then(resp => {
-          this.searchMatchKeys = []
-          let respData = resp.data
-          for (let i = 0; i < respData.length; i++) {
-            let tmp_value = (respData[i])[this.selectType]
-            let user_id = (respData[i])['user_id']
-            let tmp = {"value": user_id, "label": tmp_value}
-            this.searchMatchKeys.push(tmp)
-          }
+          console.log("upsert_date:" + resp.data)
         })
+        this.stock_search_is_show = false
+      }else{
+        alert("请选择操作用户！")
       }
+    },
+    updateSearchSelect(key) {
+      axios.get("http://localhost:8080/api/family_user/user_query", {
+        params: {
+          "col_name": this.selectType,
+          "key": key
+        }
+      }).then(resp => {
+        this.searchMatchKeys = []
+        let respData = resp.data
+        for (let i = 0; i < respData.length; i++) {
+          let tmp_value = (respData[i])[this.selectType]
+          let user_id = (respData[i])['user_id']
+          let tmp = {"value": user_id, "label": tmp_value}
+          this.searchMatchKeys.push(tmp)
+        }
+      })
     }
   }
+}
 </script>
 
 <style scoped>
-  .select_object_item {
-    float: left;
-  }
+.select_object_item {
+  float: left;
+}
 
-  .select_object_div {
-    margin-top: 15px;
-  }
+.select_object_div {
+  margin-top: 15px;
+}
 
-  .selectType {
-    width: 150px;
-  }
+.selectType {
+  width: 150px;
+}
 
-  .search_div {
-    margin-top: 10px;
-  }
+.search_div {
+  margin-top: 10px;
+}
 
-  .searchKey {
-    width: 800px;
-  }
+.searchKey {
+  width: 800px;
+}
 
 </style>

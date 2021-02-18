@@ -13,6 +13,8 @@ public interface EmailSendConfigMapper {
     List<EmailSendConfig> selectByCondition(String condition);
 
     int insertInto(EmailSendConfig emailSendConfig);
+
+    int updateByPrimaryKey(EmailSendConfig record);
 /*    int countByExample(EmailSendConfigExample example);
 
     int deleteByExample(EmailSendConfigExample example);

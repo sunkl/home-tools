@@ -1,13 +1,16 @@
 package com.sunkl.hometoolsserver.dao;
 
+import java.util.Arrays;
+
 public class EmailSendConfig {
+
     private Integer emailSendConfigId;
 
     private Integer userId;
 
     private String itemType;
 
-    private String condition;
+    private String conditionStr;
 
     private String dateRange;
 
@@ -42,13 +45,19 @@ public class EmailSendConfig {
     public void setItemType(String itemType) {
         this.itemType = itemType == null ? null : itemType.trim();
     }
-
-    public String getCondition() {
-        return condition;
+    public void upsertItemMsg(String stockCode){
+        if (this.getItemMessage() == null || this.getItemMessage().trim().isEmpty()) {
+            this.setItemMessage(stockCode);
+        } else if (!Arrays.asList(this.getItemMessage().split(",")).contains(stockCode)) {
+            this.setItemMessage(this.getItemMessage() + "," + stockCode);
+        }
+    }
+    public String getConditionStr() {
+        return conditionStr;
     }
 
-    public void setCondition(String condition) {
-        this.condition = condition == null ? null : condition.trim();
+    public void setConditionStr(String conditionStr) {
+        this.conditionStr = conditionStr == null ? null : conditionStr.trim();
     }
 
     public String getDateRange() {
@@ -89,5 +98,17 @@ public class EmailSendConfig {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime == null ? null : updateTime.trim();
+    }
+
+    public EmailSendConfig(Integer emailSendConfigId, Integer userId, String itemType, String condition, String dateRange, String dateRangeColName, String itemMessage, String createTime, String updateTime) {
+        this.emailSendConfigId = emailSendConfigId;
+        this.userId = userId;
+        this.itemType = itemType;
+        this.conditionStr = condition;
+        this.dateRange = dateRange;
+        this.dateRangeColName = dateRangeColName;
+        this.itemMessage = itemMessage;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 }

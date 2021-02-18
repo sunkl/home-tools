@@ -15,4 +15,11 @@ public class EmailSendConfigService {
     public List<EmailSendConfig> selectByUserId(String userId) {
         return emailSendConfigMapper.selectByCondition("user_id = '" + userId + "'");
     }
+
+    public int updateByPrimaryId(EmailSendConfig emailSendConfig) {
+        return emailSendConfigMapper.updateByPrimaryKey(emailSendConfig);
+    }
+    public int insertInto(EmailSendConfig emailSendConfig){
+        return emailSendConfigMapper.insertInto(emailSendConfig);
+    }
 }

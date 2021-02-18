@@ -1,2 +1,14 @@
 /.idea/
 /home-tools.iml
+/home-tools-view/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+/home-tools-view/.gradle/buildOutputCleanup/cache.properties
+/home-tools-view/.gradle/checksums/checksums.lock
+/home-tools-view/.gradle/6.7/executionHistory/executionHistory.lock
+/home-tools-view/.gradle/6.7/fileHashes/fileHashes.lock
+/home-tools-view/.gradle/6.7/gc.properties
+/home-tools-view/.gradle/configuration-cache/gc.properties
+/home-tools-view/.gradle/vcs-1/gc.properties
+/home-tools-view/home-tools-view.iml
+/home-tools-view/.gradle/6.7/fileChanges/last-build.bin
+/package-lock.json
+/docs/vue_install
