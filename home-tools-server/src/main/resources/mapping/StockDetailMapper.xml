@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunkl.hometoolsserver.mapper.StockDetailMapper">
+    <resultMap id="BaseResultMap" type="com.sunkl.hometoolsserver.dao.StockDetail">
+        <id column="stock_detail_id" property="stockDetailId" jdbcType="INTEGER"/>
+        <result column="stock_code" property="stockCode" jdbcType="VARCHAR"/>
+        <result column="stock_name" property="stockName" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="VARCHAR"/>
+    </resultMap>
+    <select id="selectByCondition" resultMap="BaseResultMap">
+        select *
+        from stock_detail
+        where ${condition}
+    </select>
+
+    <!--    <sql id="Example_Where_Clause">
+            <where>
+                <foreach collection="oredCriteria" item="criteria" separator="or">
+                    <if test="criteria.valid">
+                        <trim prefix="(" suffix=")" prefixOverrides="and">
+                            <foreach collection="criteria.criteria" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        and ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue">
+                                        and ${criterion.condition} #{criterion.value}
+                                    </when>
+                                    <when test="criterion.betweenValue">
+                                        and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        and ${criterion.condition}
+                                        <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                                 separator=",">
+                                            #{listItem}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </where>
+        </sql>
+        <sql id="Update_By_Example_Where_Clause">
+            <where>
+                <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                    <if test="criteria.valid">
+                        <trim prefix="(" suffix=")" prefixOverrides="and">
+                            <foreach collection="criteria.criteria" item="criterion">
+                                <choose>
+                                    <when test="criterion.noValue">
+                                        and ${criterion.condition}
+                                    </when>
+                                    <when test="criterion.singleValue">
+                                        and ${criterion.condition} #{criterion.value}
+                                    </when>
+                                    <when test="criterion.betweenValue">
+                                        and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                    </when>
+                                    <when test="criterion.listValue">
+                                        and ${criterion.condition}
+                                        <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                                 separator=",">
+                                            #{listItem}
+                                        </foreach>
+                                    </when>
+                                </choose>
+                            </foreach>
+                        </trim>
+                    </if>
+                </foreach>
+            </where>
+        </sql>
+        <sql id="Base_Column_List">
+            stock_detail_id
+            , stock_code, stock_name, create_time
+        </sql>
+
+        <select id="selectByExample" resultMap="BaseResultMap"
+                parameterType="com.sunkl.hometoolsserver.dao.StockDetailExample">
+            select
+            <if test="distinct">
+                distinct
+            </if>
+            'true' as QUERYID,
+            <include refid="Base_Column_List"/>
+            from stock_detail
+            <if test="_parameter != null">
+                <include refid="Example_Where_Clause"/>
+            </if>
+            <if test="orderByClause != null">
+                order by ${orderByClause}
+            </if>
+        </select>
+        <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+            select
+            <include refid="Base_Column_List"/>
+            from stock_detail
+            where stock_detail_id = #{stockDetailId,jdbcType=INTEGER}
+        </select>
+        <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+            delete
+            from stock_detail
+            where stock_detail_id = #{stockDetailId,jdbcType=INTEGER}
+        </delete>
+        <delete id="deleteByExample" parameterType="com.sunkl.hometoolsserver.dao.StockDetailExample">
+            delete from stock_detail
+            <if test="_parameter != null">
+                <include refid="Example_Where_Clause"/>
+            </if>
+        </delete>
+        <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.StockDetail">
+            insert into stock_detail (stock_detail_id, stock_code, stock_name,
+                                      create_time)
+            values (#{stockDetailId,jdbcType=INTEGER}, #{stockCode,jdbcType=VARCHAR}, #{stockName,jdbcType=VARCHAR},
+                    #{createTime,jdbcType=VARCHAR})
+        </insert>
+        <insert id="insertSelective" parameterType="com.sunkl.hometoolsserver.dao.StockDetail">
+            insert into stock_detail
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                <if test="stockDetailId != null">
+                    stock_detail_id,
+                </if>
+                <if test="stockCode != null">
+                    stock_code,
+                </if>
+                <if test="stockName != null">
+                    stock_name,
+                </if>
+                <if test="createTime != null">
+                    create_time,
+                </if>
+            </trim>
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="stockDetailId != null">
+                    #{stockDetailId,jdbcType=INTEGER},
+                </if>
+                <if test="stockCode != null">
+                    #{stockCode,jdbcType=VARCHAR},
+                </if>
+                <if test="stockName != null">
+                    #{stockName,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    #{createTime,jdbcType=VARCHAR},
+                </if>
+            </trim>
+        </insert>
+        <select id="countByExample" parameterType="com.sunkl.hometoolsserver.dao.StockDetailExample"
+                resultType="java.lang.Integer">
+            select count(*) from stock_detail
+            <if test="_parameter != null">
+                <include refid="Example_Where_Clause"/>
+            </if>
+        </select>
+        <update id="updateByExampleSelective" parameterType="map">
+            update stock_detail
+            <set>
+                <if test="record.stockDetailId != null">
+                    stock_detail_id = #{record.stockDetailId,jdbcType=INTEGER},
+                </if>
+                <if test="record.stockCode != null">
+                    stock_code = #{record.stockCode,jdbcType=VARCHAR},
+                </if>
+                <if test="record.stockName != null">
+                    stock_name = #{record.stockName,jdbcType=VARCHAR},
+                </if>
+                <if test="record.createTime != null">
+                    create_time = #{record.createTime,jdbcType=VARCHAR},
+                </if>
+            </set>
+            <if test="_parameter != null">
+                <include refid="Update_By_Example_Where_Clause"/>
+            </if>
+        </update>
+        <update id="updateByExample" parameterType="map">
+            update stock_detail
+            set stock_detail_id = #{record.stockDetailId,jdbcType=INTEGER},
+            stock_code = #{record.stockCode,jdbcType=VARCHAR},
+            stock_name = #{record.stockName,jdbcType=VARCHAR},
+            create_time = #{record.createTime,jdbcType=VARCHAR}
+            <if test="_parameter != null">
+                <include refid="Update_By_Example_Where_Clause"/>
+            </if>
+        </update>
+        <update id="updateByPrimaryKeySelective" parameterType="com.sunkl.hometoolsserver.dao.StockDetail">
+            update stock_detail
+            <set>
+                <if test="stockCode != null">
+                    stock_code = #{stockCode,jdbcType=VARCHAR},
+                </if>
+                <if test="stockName != null">
+                    stock_name = #{stockName,jdbcType=VARCHAR},
+                </if>
+                <if test="createTime != null">
+                    create_time = #{createTime,jdbcType=VARCHAR},
+                </if>
+            </set>
+            where stock_detail_id = #{stockDetailId,jdbcType=INTEGER}
+        </update>
+        <update id="updateByPrimaryKey" parameterType="com.sunkl.hometoolsserver.dao.StockDetail">
+            update stock_detail
+            set stock_code  = #{stockCode,jdbcType=VARCHAR},
+                stock_name  = #{stockName,jdbcType=VARCHAR},
+                create_time = #{createTime,jdbcType=VARCHAR}
+            where stock_detail_id = #{stockDetailId,jdbcType=INTEGER}
+        </update>-->
+</mapper>

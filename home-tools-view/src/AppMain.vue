@@ -36,8 +36,14 @@
           <el-submenu index="2" class="one_stage">
             <template slot="title">
               <i class="el-icon-notebook-1"></i>
-              <span>家庭账单</span>
+              <span>账单管理</span>
             </template>
+            <el-menu-item-group class="two_stage">
+              <template slot="title">家庭开支</template>
+            </el-menu-item-group>
+            <el-menu-item-group class="two_stage">
+              <template slot="title">对公账务</template>
+            </el-menu-item-group>
           </el-submenu>
 
           <el-submenu index="3" class="one_stage">

@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/family_user")
 public class FamliyUserController {
+
     @Autowired
     FamilyUserService familyUserService;
 
@@ -44,6 +45,7 @@ public class FamliyUserController {
             @RequestParam("phone") String phone) {
         String currentTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         return familyUserService.insertInto(new FamilyUser(
+                -1,
                 username,
                 passwd,
                 role,
@@ -52,7 +54,8 @@ public class FamliyUserController {
                 phone,
                 birthDay,
                 currentTime,
-                currentTime
+                currentTime,
+                ""
         ));
     }
 
@@ -60,6 +63,16 @@ public class FamliyUserController {
     @GetMapping("/user_query")
     public String getUserByColNameAndKey(@RequestParam("col_name") String[] colName, @RequestParam("key") String key) throws JsonProcessingException {
         List<FamilyUser> users = familyUserService.findUserByColName(colName[0], key);
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.setPropertyNamingStrategy(com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE);
+        String json = mapper.writeValueAsString(users);
+        return json;
+    }
+
+    @CrossOrigin
+    @GetMapping("/queryUserById")
+    public String getUserByUserID(@RequestParam("user_id") String userID) throws JsonProcessingException {
+        List<FamilyUser> users = familyUserService.findUserByCondition("user_id=" + userID);
         ObjectMapper mapper = new ObjectMapper();
         mapper.setPropertyNamingStrategy(com.fasterxml.jackson.databind.PropertyNamingStrategy.SNAKE_CASE);
         String json = mapper.writeValueAsString(users);

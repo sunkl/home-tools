@@ -22,7 +22,7 @@ public class FamilyUserService {
     }
 
     public List<FamilyUser> findUserByCondition(String condition) {
-        return familyUserMapper.selectUser();
+        return familyUserMapper.selectUserByCondition(condition);
     }
 
     public List<FamilyUser> findUserByColName(String colName, String key) {

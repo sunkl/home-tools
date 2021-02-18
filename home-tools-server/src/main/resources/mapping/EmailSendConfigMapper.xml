@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunkl.hometoolsserver.mapper.EmailSendConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.sunkl.hometoolsserver.dao.EmailSendConfig" >
+    <id column="email_send_config_id" property="emailSendConfigId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="item_type" property="itemType" jdbcType="VARCHAR" />
+    <result column="condition" property="condition" jdbcType="VARCHAR" />
+    <result column="date_range" property="dateRange" jdbcType="VARCHAR" />
+    <result column="date_range_col_name" property="dateRangeColName" jdbcType="VARCHAR" />
+    <result column="item_message" property="itemMessage" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select * from email_send_config where ${condition}
+  </select>
+  <insert id="insertInto" parameterType="com.sunkl.hometoolsserver.dao.EmailSendConfig" >
+    insert into email_send_config (email_send_config_id, user_id, item_type,
+                                   condition, date_range, date_range_col_name,
+                                   item_message, create_time, update_time
+    )
+    values (#{emailSendConfigId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{itemType,jdbcType=VARCHAR},
+            #{condition,jdbcType=VARCHAR}, #{dateRange,jdbcType=VARCHAR}, #{dateRangeColName,jdbcType=VARCHAR},
+            #{itemMessage,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+           )
+  </insert>
+  <!--<sql id="Base_Column_List" >
+    email_send_config_id, user_id, item_type, condition, date_range, date_range_col_name, 
+    item_message, create_time, update_time
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from email_send_config
+    where email_send_config_id = #{emailSendConfigId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from email_send_config
+    where email_send_config_id = #{emailSendConfigId,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.EmailSendConfig" >
+    insert into email_send_config (email_send_config_id, user_id, item_type, 
+      condition, date_range, date_range_col_name, 
+      item_message, create_time, update_time
+      )
+    values (#{emailSendConfigId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{itemType,jdbcType=VARCHAR}, 
+      #{condition,jdbcType=VARCHAR}, #{dateRange,jdbcType=VARCHAR}, #{dateRangeColName,jdbcType=VARCHAR}, 
+      #{itemMessage,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <update id="updateByExample" parameterType="map" >
+    update email_send_config
+    set email_send_config_id = #{record.emailSendConfigId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      item_type = #{record.itemType,jdbcType=VARCHAR},
+      condition = #{record.condition,jdbcType=VARCHAR},
+      date_range = #{record.dateRange,jdbcType=VARCHAR},
+      date_range_col_name = #{record.dateRangeColName,jdbcType=VARCHAR},
+      item_message = #{record.itemMessage,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.sunkl.hometoolsserver.dao.EmailSendConfig" >
+    update email_send_config
+    set user_id = #{userId,jdbcType=INTEGER},
+      item_type = #{itemType,jdbcType=VARCHAR},
+      condition = #{condition,jdbcType=VARCHAR},
+      date_range = #{dateRange,jdbcType=VARCHAR},
+      date_range_col_name = #{dateRangeColName,jdbcType=VARCHAR},
+      item_message = #{itemMessage,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where email_send_config_id = #{emailSendConfigId,jdbcType=INTEGER}
+  </update>-->
+</mapper>

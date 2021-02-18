@@ -4,7 +4,8 @@ public class FamilyUser {
     public FamilyUser() {
     }
 
-    public FamilyUser(String userName, String passwd, String userRole, String userAuth, String niceName, String phone, String birthDay, String createTime, String updateTime) {
+    public FamilyUser(Integer userId, String userName, String passwd, String userRole, String userAuth, String niceName, String phone, String birthDay, String createTime, String updateTime, String userEmail) {
+        this.userId = userId;
         this.userName = userName;
         this.passwd = passwd;
         this.userRole = userRole;
@@ -14,6 +15,7 @@ public class FamilyUser {
         this.birthDay = birthDay;
         this.createTime = createTime;
         this.updateTime = updateTime;
+        this.userEmail = userEmail;
     }
 
     private Integer userId;
@@ -35,6 +37,7 @@ public class FamilyUser {
     private String createTime;
 
     private String updateTime;
+    private String userEmail;
 
     public Integer getUserId() {
         return userId;
@@ -114,5 +117,13 @@ public class FamilyUser {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime == null ? null : updateTime.trim();
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 }
