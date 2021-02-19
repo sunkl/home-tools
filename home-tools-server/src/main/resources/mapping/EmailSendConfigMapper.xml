@@ -54,9 +54,9 @@
             date_range          = #{dateRange,jdbcType=VARCHAR},
             date_range_col_name = #{dateRangeColName,jdbcType=VARCHAR},
             item_message        = #{itemMessage,jdbcType=VARCHAR},
-            create_time         = #{createTime,jdbcType=VARCHAR},
             update_time         = #{updateTime,jdbcType=VARCHAR}
-        where email_send_config_id = #{emailSendConfigId,jdbcType=INTEGER}
+        where user_id = #{userId,jdbcType=INTEGER}
+          and item_type = #{itemType,jdbcType=VARCHAR}
     </update>
     <!--<sql id="Base_Column_List" >
       email_send_config_id, user_id, item_type, condition, date_range, date_range_col_name,

@@ -409,7 +409,7 @@
             }
           }).then(resp => {
             console.log(resp.data)
-            if (resp.data === 3) {
+            if (resp.data > 0) {
               this.stock_table_data.push(this.tmp_stock_detail_object)
             }
           })
