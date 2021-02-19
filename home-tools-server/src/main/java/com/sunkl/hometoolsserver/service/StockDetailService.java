@@ -20,6 +20,7 @@ public class StockDetailService {
                 .append("%'");
         return stockDetailMapper.selectByCondition(condition.toString());
     }
+
     public List<StockDetail> qeuryByColNameAndColValueEq(String colName, String colValue) {
         StringBuffer condition = new StringBuffer()
                 .append(colName)
@@ -27,5 +28,10 @@ public class StockDetailService {
                 .append(colValue)
                 .append("'");
         return stockDetailMapper.selectByCondition(condition.toString());
+    }
+
+    public List<StockDetail> queryByStockCodes(String stockCodes) {
+        String conditionStr = String.format("stock_code in ( %s )", stockCodes);
+        return stockDetailMapper.selectByCondition(conditionStr);
     }
 }

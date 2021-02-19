@@ -1,6 +1,8 @@
 package com.sunkl.hometoolsserver.dao;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EmailSendConfig {
 
@@ -58,6 +60,23 @@ public class EmailSendConfig {
         }
     }
 
+    public boolean deleteItemMsg(String stockCode) {
+        if (this.getItemMessage() == null || this.getItemMessage().trim().isEmpty()) {
+            return false;
+        } else {
+            String aferDelete = this.getItemMessage()
+                    .replace(stockCode + ",", "")
+                    .replace("," + stockCode, "")
+                    .replace(stockCode, "");
+            if (aferDelete.equals(this.itemMessage)) {
+                return false;
+            } else {
+                this.setItemMessage(aferDelete);
+                return true;
+            }
+        }
+    }
+
     public String getConditionStr() {
         return conditionStr;
     }
@@ -104,6 +123,17 @@ public class EmailSendConfig {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime == null ? null : updateTime.trim();
+    }
+
+    public Set<String> getStockCodes() {
+        if (this.getItemMessage() == null || this.getItemMessage().trim().isEmpty()) {
+            return new HashSet<String>();
+        } else {
+            return new HashSet<String>(Arrays.asList(this.getItemMessage().split(",")));
+        }
+    }
+
+    public EmailSendConfig() {
     }
 
     public EmailSendConfig(Integer emailSendConfigId, Integer userId, String itemType, String condition, String dateRange, String dateRangeColName, String itemMessage, String createTime, String updateTime) {

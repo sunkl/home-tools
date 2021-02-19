@@ -15,6 +15,8 @@ public interface EmailSendConfigMapper {
     int insertInto(EmailSendConfig emailSendConfig);
 
     int updateByPrimaryKey(EmailSendConfig record);
+
+    int upsertByPK(EmailSendConfig record);
 /*    int countByExample(EmailSendConfigExample example);
 
     int deleteByExample(EmailSendConfigExample example);

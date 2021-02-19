@@ -18,12 +18,33 @@
         where ${condition}
     </select>
     <insert id="insertInto" parameterType="com.sunkl.hometoolsserver.dao.EmailSendConfig">
-        insert into email_send_config (  user_id, item_type,
+        insert into email_send_config (user_id, item_type,
                                        condition_str, date_range, date_range_col_name,
                                        item_message, create_time, update_time)
-        values (  #{userId,jdbcType=INTEGER}, #{itemType,jdbcType=VARCHAR},
+        values (#{userId,jdbcType=INTEGER}, #{itemType,jdbcType=VARCHAR},
                 #{conditionStr,jdbcType=VARCHAR}, #{dateRange,jdbcType=VARCHAR}, #{dateRangeColName,jdbcType=VARCHAR},
                 #{itemMessage,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+    </insert>
+    <insert id="upsertByPK" parameterType="com.sunkl.hometoolsserver.dao.EmailSendConfig">
+        insert into email_send_config (user_id,
+                                       item_type,
+                                       condition_str,
+                                       date_range,
+                                       date_range_col_name,
+                                       item_message,
+                                       create_time,
+                                       update_time)
+        values (#{userId,jdbcType=INTEGER},
+                #{itemType,jdbcType=VARCHAR},
+                #{conditionStr,jdbcType=VARCHAR},
+                #{dateRange,jdbcType=VARCHAR},
+                #{dateRangeColName,jdbcType=VARCHAR},
+                #{itemMessage,jdbcType=VARCHAR},
+                #{createTime,jdbcType=VARCHAR},
+                #{updateTime,jdbcType=VARCHAR}) ON DUPLICATE KEY
+        UPDATE
+            item_message=#{itemMessage,jdbcType=VARCHAR},
+            update_time=#{updateTime,jdbcType=VARCHAR}
     </insert>
     <update id="updateByPrimaryKey" parameterType="com.sunkl.hometoolsserver.dao.EmailSendConfig">
         update email_send_config
