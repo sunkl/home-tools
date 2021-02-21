@@ -1,7 +1,6 @@
 package com.sunkl.hometoolsserver.utils
 
 object UdImplict {
-
   implicit class ExtendString(input: String) {
     def repeatNum(num: Int): String = {
       StringUtils.repeatStr(input, num)
@@ -23,8 +22,9 @@ object UdImplict {
       val valueSuffSpace = " ".repeatNum(step * HtmlUtils.spaceNumPerStemp)
       input.map(elment => elment.swapHtml(sonElement)).mkString(s"\n").swapHtml(parentElement, step, true)
     }
-    def swapHtml(parentElement: String, step: Int ): String = {
-      val valueSuffSpace = " ".repeatNum((step-1) * HtmlUtils.spaceNumPerStemp)
+
+    def swapHtml(parentElement: String, step: Int): String = {
+      val valueSuffSpace = " ".repeatNum((step - 1) * HtmlUtils.spaceNumPerStemp)
       input.mkString(s"\n").swapHtml(parentElement, step, true)
     }
   }

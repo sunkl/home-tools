@@ -11,25 +11,6 @@ class HtmlTable(
                  var step: Int
                ) {
 
-
-  //  /**
-  //   * 拼接表头
-  //   *
-  //   * @return
-  //   */
-  //  def getTitleHtml: String = {
-  //    titles.swapHtml("tr", "th", trStep)
-  //  }
-  //
-  //  /**
-  //   * 拼接表体
-  //   *
-  //   * @return
-  //   */
-  //  def getBodyTitleHtml = {
-  //    this.tableBody.map(row => row.swapHtml("tr", "td", trStep))
-  //  }
-
   def toHtml(): String = {
     val tableSpace = " ".repeatNum(step * HtmlUtils.spaceNumPerStemp)
     val trSpace = " ".repeatNum((step + 1) * HtmlUtils.spaceNumPerStemp)

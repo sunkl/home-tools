@@ -42,10 +42,52 @@
       <el-card class="box-card" style="width: 1000px">
         <div slot="header" class="clearfix">
           <span>基本条件配置</span>
+          <div style="float: right">
+            <div style="float: left">邮件告警 &nbsp;&nbsp;</div>
+            <div style="float: right">
+              <el-switch
+                style="display: block"
+                v-model="email_alter_enable"
+                v-on:change="upsert_base_config('email_alter_enable',email_alter_enable)"
+                active-color="#13ce66"
+                inactive-color="#ff4949"
+                inactive-text="关"
+                active-text="开">
+              </el-switch>
+            </div>
+          </div>
         </div>
 
         <div style="margin-bottom: 30px">
           <table>
+            <tr>
+              <td>新股申购</td>
+              <td>
+                <el-switch
+                  style="display: block"
+                  v-model="new_stock_buy"
+                  v-on:change="upsert_base_config('new_stock_buy',new_stock_buy)"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  inactive-text="关"
+                  active-text="开">
+                </el-switch>
+              </td>
+              <td></td>
+              <td>新股开盘</td>
+              <td>
+                <el-switch
+                  style="display: block"
+                  v-model="new_stock_open"
+                  v-on:change="upsert_base_config('new_stock_open',new_stock_open)"
+                  active-color="#13ce66"
+                  inactive-color="#ff4949"
+                  inactive-text="关"
+                  active-text="开">
+                </el-switch>
+              </td>
+              <td></td>
+            </tr>
             <tr>
               <td>开始时间</td>
               <td>
@@ -105,17 +147,21 @@
               </td>
             </tr>
             <tr>
-              <td>邮件告警</td>
-              <td>
-                <el-switch
-                  style="display: block"
-                  v-model="email_alter_enable"
-                  v-on:change="upsert_base_config('email_alter_enable',email_alter_enable)"
-                  active-color="#13ce66"
-                  inactive-color="#ff4949"
-                  inactive-text="关"
-                  active-text="开">
-                </el-switch>
+              <td colspan="5">
+                <el-button type="warning"
+                           v-on:click="send_email_test"
+                           :loading="send_email_test_is_finish"
+                           :disabled="send_email_test_is_finish"
+                >测试发送
+                </el-button>
+                <!--                <template>
+                                  <el-button
+                                    icon="el-icon-message"
+                                    plain
+                                    @click="send_email_test">
+                                    发送测试
+                                  </el-button>
+                                </template>-->
               </td>
             </tr>
           </table>
@@ -191,273 +237,310 @@
 </template>
 
 <script>
-  import axios from "axios";
+import axios from "axios";
 
-  export default {
-    name: "EmailSent",
-    data() {
-      return {
-        value1: true,
-        selectType: 'nice_name',
-        selectTypeOptions: [{
-          value: 'nice_name',
-          label: '昵称'
+export default {
+  name: "EmailSent",
+  data() {
+    return {
+      value1: true,
+      selectType: 'nice_name',
+      selectTypeOptions: [{
+        value: 'nice_name',
+        label: '昵称'
+      }, {
+        value: 'phone',
+        label: '用户电话'
+      }, {
+        value: 'user_email',
+        label: '用户邮箱'
+      }, {
+        value: 'user_role',
+        label: '用户角色'
+      }],
+      searchMatchKeys: [{}],
+      searchKey: '',
+      show_nice_name: '',
+      show_phone: '',
+      show_email: '',
+      stock_table_data: [],
+      stock_search_type: 'stock_code',
+      stock_search_type_option: [
+        {
+          value: 'stock_code',
+          label: '股票代码'
         }, {
-          value: 'phone',
-          label: '用户电话'
-        }, {
-          value: 'user_email',
-          label: '用户邮箱'
-        }, {
-          value: 'user_role',
-          label: '用户角色'
-        }],
-        searchMatchKeys: [{}],
-        searchKey: '',
-        show_nice_name: '',
-        show_phone: '',
-        show_email: '',
-        stock_table_data: [],
-        stock_search_type: 'stock_code',
-        stock_search_type_option: [
-          {
-            value: 'stock_code',
-            label: '股票代码'
-          }, {
-            value: 'stock_name',
-            label: '公司名称'
-          }
-        ],
-        stock_search_key: '',
-        stock_search_match_keys: [],
-        stock_search_is_show: false,
-        tmp_stock_detail_object: {},
-        alert_start_date: '',
-        alter_start_time: '',
-        alter_end_time: '',
-        alter_interval_hour: '',
-        email_alter_enable: true,
-      }
+          value: 'stock_name',
+          label: '公司名称'
+        }
+      ],
+      stock_search_key: '',
+      stock_search_match_keys: [],
+      stock_search_is_show: false,
+      tmp_stock_detail_object: {},
+      alert_start_date: '',
+      alter_start_time: '',
+      alter_end_time: '',
+      alter_interval_hour: '',
+      email_alter_enable: false,
+      new_stock_open: false,
+      new_stock_buy: false,
+      send_email_test_is_finish: false
+    }
+  },
+  mounted() {
+    /**初始化选择框选项*/
+    this.updateSearchSelect('')
+  },
+  methods: {
+    show_stock_search_div() {
+      this.stock_search_is_show = true
     },
-    mounted() {
-      /**初始化选择框选项*/
+    tableRowClassName() {
+
+    },
+    onselectKeyTypeChange() {
       this.updateSearchSelect('')
     },
-    methods: {
-      show_stock_search_div() {
-        this.stock_search_is_show = true
-      },
-      tableRowClassName() {
-
-      },
-      onselectKeyTypeChange() {
-        this.updateSearchSelect('')
-      },
-      onInputSearchKey(key) {
-        this.updateSearchSelect(key)
-      },
-      selectAllUser() {
-        this.updateSearchSelect('')
-      },
-      query_item_msg(user_id, item_type) {
-        if (this.searchKey !== '') {
-          console.log("查询基本配置，item_type:" + item_type + ",user_id:" + user_id)
-          axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/queryItemMsgByUserIdItemType", {
-            params: {
-              "item_type": item_type,
-              "user_id": user_id,
-            }
-          }).then(resp => {
-            console.log("完成更新基本配置，item_type:" + item_type + ",user_id:" + user_id)
-            this.reflush_base_config(item_type, resp.data)
-          })
+    onInputSearchKey(key) {
+      this.updateSearchSelect(key)
+    },
+    selectAllUser() {
+      this.updateSearchSelect('')
+    },
+    alert_message(titleMsg, mesg) {
+      const h = this.$createElement;
+      this.$notify({
+        title: titleMsg,
+        message: h('i', {style: 'color: teal'}, mesg)
+      })
+    },
+    send_email_test() {
+      let user_id = this.searchKey
+      this.send_email_test_is_finish = true
+      console.log("开始测试发送：user_id:" + user_id)
+      axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/emailSendTest", {
+        params: {
+          "user_id": user_id
         }
-      },
-      reflush_base_config(item_type, itme_value) {
-        if (item_type === 'alert_start_date') {
-          this.alert_start_date = itme_value
-        } else if (item_type === 'alter_interval_hour') {
-          this.alter_interval_hour = itme_value
-        } else if (item_type === 'alter_start_time') {
-          this.alter_start_time = itme_value
-        } else if (item_type === 'alter_end_time') {
-          this.alter_end_time = itme_value
-        } else if (item_type === 'email_alter_enable') {
-          this.email_alter_enable = itme_value
-        }
-      },
-      upsert_base_config(item_type, item_msg) {
-        console.log("更新基本配置，user_id:" + this.searchKey + ",item_type:" + item_type + ",item_msg:" + item_msg)
-        if (this.searchKey !== '' && item_msg !== '') {
-          axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/updateEmailSendBaseConfig", {
-            params: {
-              "item_type": item_type,
-              "user_id": this.searchKey,
-              "item_msg": item_msg
-            }
-          }).then(resp => {
-            console.log("完成更新基本配置，item_type:" + item_type + ",item_msg:" + item_msg)
-            this.reflush_base_config(item_type, resp.data)
-          })
-        }
-      },
-      switch_change(stock_code, item_type, switch_value) {
-        console.log("switch change stock_code:" + stock_code + ",item_type:" + item_type + ",switch_value:" + switch_value)
-        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/updateStockCodeItemSwitch", {
-          params: {
-            "stock_code": stock_code,
-            "item_type": item_type,
-            "switch_value": switch_value,
-            "user_id": this.searchKey
-          }
-        }).then(resp => {
-          this.stock_table_data = resp.data
-          console.log("完成删除，重新刷新数据：user_id=" + this.searchKey + ",data:")
-          console.log(resp.data)
-        })
-      },
-      deleteStockRow(stock_code) {
-        console.log("删除行数： stock_code=" + stock_code + ",user_id:" + this.searchKey)
-        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/deleteStockRow", {
-          params: {
-            "stock_code": stock_code,
-            "user_id": this.searchKey
-          }
-        }).then(resp => {
-          this.stock_table_data = resp.data
-          console.log("完成删除，重新刷新数据：user_id=" + this.searchKey + ",data:")
-          console.log(resp.data)
-        })
-      },
-      onSelectUser() {
-        /*请求详细用户信息并填充*/
-        console.log("开始查询用户信息，userID=" + this.searchKey)
-        axios.get("http://localhost:8080/api/family_user/queryUserById", {
-          params: {
-            "user_id": this.searchKey
-          }
-        }).then(resp => {
-          let users = resp.data
-          if (users.length > 0) {
-            let selectObject = users[0]
-            this.show_email = selectObject['user_email']
-            this.show_phone = selectObject['phone']
-            this.show_nice_name = selectObject['nice_name']
-            console.log("用户信息查询完成，email:" + this.show_email + ",phone:" + this.show_phone + ",nice_name:" + this.show_nice_name)
-          } else {
-            console.log("用户信息查询完成,未查询到合适的用户信息！")
-          }
-        })
-        console.log("开始查询用户邮件配置信息，userID=" + this.searchKey)
-        /*请求用户邮件配置信息*/
-        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/queryAllConfigByUserId", {
-          params: {
-            "user_id": this.searchKey
-          }
-        }).then(resp => {
-          this.stock_table_data = resp.data
-          console.log("完成用户配置信息查询user_id=" + this.searchKey + ",data:")
-          console.log(resp.data)
-        })
-        /**查询基本配置*/
-        this.query_item_msg(this.searchKey, 'alert_start_date')
-        this.query_item_msg(this.searchKey, 'alter_interval_hour')
-        this.query_item_msg(this.searchKey, 'alter_start_time')
-        this.query_item_msg(this.searchKey, 'alter_end_time')
-        this.query_item_msg(this.searchKey, 'email_alter_enable')
-      },
-      onInputSearchStockKey(stock_key) {
-        axios.get("http://localhost:8080/api/family_user/qeuryStockDetailByColName", {
-          params: {
-            "col_name": this.stock_search_type,
-            "col_value": stock_key
-          }
-        }).then(resp => {
-          this.stock_search_match_keys = []
-          let respData = resp.data
-          console.log(respData)
-          for (let i = 0; i < respData.length; i++) {
-            let colValue = (respData[i])[this.stock_search_type]
-            let stock_detail_id = (respData[i])['stock_detail_id']
-            let tmp = {"value": stock_detail_id, "label": colValue}
-            this.stock_search_match_keys.push(tmp)
-          }
-        })
-      },
-      addStockToTable() {
-        let user_id = this.searchKey
-        if (user_id !== '') {
-          axios.get("http://localhost:8080/api/family_user/queryStockByStockDetailId", {
-            params: {
-              "stock_detail_id": this.stock_search_key
-            }
-          }).then(resp => {
-            this.searchMatchKeys = []
-            let respData = resp.data
-            if (respData.length > 0) {
-              this.tmp_stock_detail_object = respData[0]
-              this.tmp_stock_detail_object.stock_holding_change = true
-              this.tmp_stock_detail_object.stock_holding_change_senior_manager = true
-              this.tmp_stock_detail_object.company_announcement = true
-            }
-          })
-          let stock_detail_id = this.stock_search_key
-          axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/upsertAllItemEmpy", {
-            params: {
-              "stock_detail_id": stock_detail_id,
-              "user_id": user_id
-            }
-          }).then(resp => {
-            console.log(resp.data)
-            if (resp.data > 0) {
-              this.stock_table_data.push(this.tmp_stock_detail_object)
-            }
-          })
-          this.stock_search_is_show = false
+      }).then(resp => {
+        console.log("发送结果:")
+        if (resp.data) {
+          console.log("发送成功！")
+          this.alert_message("提示", "邮件已经发送成功，请注意查收！")
         } else {
-          alert("请选择操作用户！")
+          console.log("发送失败！")
+          this.alert_message("警告", "邮件发送失败，请检查邮件配置，或者联系管理员！")
         }
-      },
-      updateSearchSelect(key) {
-        axios.get("http://localhost:8080/api/family_user/user_query", {
+        this.send_email_test_is_finish = false
+      })
+    },
+    query_item_msg(user_id, item_type) {
+      if (this.searchKey !== '') {
+        console.log("查询基本配置，item_type:" + item_type + ",user_id:" + user_id)
+        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/queryItemMsgByUserIdItemType", {
           params: {
-            "col_name": this.selectType,
-            "key": key
+            "item_type": item_type,
+            "user_id": user_id,
+          }
+        }).then(resp => {
+          console.log("完成更新基本配置，item_type:" + item_type + ",user_id:" + user_id)
+          this.reflush_base_config(item_type, resp.data)
+        })
+      }
+    },
+    reflush_base_config(item_type, itme_value) {
+      if (item_type === 'alert_start_date') {
+        this.alert_start_date = itme_value
+      } else if (item_type === 'alter_interval_hour') {
+        this.alter_interval_hour = itme_value
+      } else if (item_type === 'alter_start_time') {
+        this.alter_start_time = itme_value
+      } else if (item_type === 'alter_end_time') {
+        this.alter_end_time = itme_value
+      } else if (item_type === 'email_alter_enable') {
+        this.email_alter_enable = itme_value
+      } else if (item_type === 'new_stock_open') {
+        this.new_stock_open = itme_value
+      } else if (item_type === 'new_stock_buy') {
+        this.new_stock_buy = itme_value
+      }
+    },
+    upsert_base_config(item_type, item_msg) {
+      console.log("更新基本配置，user_id:" + this.searchKey + ",item_type:" + item_type + ",item_msg:" + item_msg)
+      if (this.searchKey !== '' && item_msg !== '') {
+        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/updateEmailSendBaseConfig", {
+          params: {
+            "item_type": item_type,
+            "user_id": this.searchKey,
+            "item_msg": item_msg
+          }
+        }).then(resp => {
+          console.log("完成更新基本配置，item_type:" + item_type + ",item_msg:" + item_msg)
+          this.reflush_base_config(item_type, resp.data)
+        })
+      }
+    },
+    switch_change(stock_code, item_type, switch_value) {
+      console.log("switch change stock_code:" + stock_code + ",item_type:" + item_type + ",switch_value:" + switch_value)
+      axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/updateStockCodeItemSwitch", {
+        params: {
+          "stock_code": stock_code,
+          "item_type": item_type,
+          "switch_value": switch_value,
+          "user_id": this.searchKey
+        }
+      }).then(resp => {
+        this.stock_table_data = resp.data
+        console.log("完成删除，重新刷新数据：user_id=" + this.searchKey + ",data:")
+        console.log(resp.data)
+      })
+    },
+    deleteStockRow(stock_code) {
+      console.log("删除行数： stock_code=" + stock_code + ",user_id:" + this.searchKey)
+      axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/deleteStockRow", {
+        params: {
+          "stock_code": stock_code,
+          "user_id": this.searchKey
+        }
+      }).then(resp => {
+        this.stock_table_data = resp.data
+        console.log("完成删除，重新刷新数据：user_id=" + this.searchKey + ",data:")
+        console.log(resp.data)
+      })
+    },
+    onSelectUser() {
+      /*请求详细用户信息并填充*/
+      console.log("开始查询用户信息，userID=" + this.searchKey)
+      axios.get("http://localhost:8080/api/family_user/queryUserById", {
+        params: {
+          "user_id": this.searchKey
+        }
+      }).then(resp => {
+        let users = resp.data
+        if (users.length > 0) {
+          let selectObject = users[0]
+          this.show_email = selectObject['user_email']
+          this.show_phone = selectObject['phone']
+          this.show_nice_name = selectObject['nice_name']
+          console.log("用户信息查询完成，email:" + this.show_email + ",phone:" + this.show_phone + ",nice_name:" + this.show_nice_name)
+        } else {
+          console.log("用户信息查询完成,未查询到合适的用户信息！")
+        }
+      })
+      console.log("开始查询用户邮件配置信息，userID=" + this.searchKey)
+      /*请求用户邮件配置信息*/
+      axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/queryAllConfigByUserId", {
+        params: {
+          "user_id": this.searchKey
+        }
+      }).then(resp => {
+        this.stock_table_data = resp.data
+        console.log("完成用户配置信息查询user_id=" + this.searchKey + ",data:")
+        console.log(resp.data)
+      })
+      /**查询基本配置*/
+      this.query_item_msg(this.searchKey, 'alert_start_date')
+      this.query_item_msg(this.searchKey, 'alter_interval_hour')
+      this.query_item_msg(this.searchKey, 'alter_start_time')
+      this.query_item_msg(this.searchKey, 'alter_end_time')
+      this.query_item_msg(this.searchKey, 'email_alter_enable')
+      this.query_item_msg(this.searchKey, 'new_stock_open')
+      this.query_item_msg(this.searchKey, 'new_stock_buy')
+
+    },
+    onInputSearchStockKey(stock_key) {
+      axios.get("http://localhost:8080/api/family_user/qeuryStockDetailByColName", {
+        params: {
+          "col_name": this.stock_search_type,
+          "col_value": stock_key
+        }
+      }).then(resp => {
+        this.stock_search_match_keys = []
+        let respData = resp.data
+        console.log(respData)
+        for (let i = 0; i < respData.length; i++) {
+          let colValue = (respData[i])[this.stock_search_type]
+          let stock_detail_id = (respData[i])['stock_detail_id']
+          let tmp = {"value": stock_detail_id, "label": colValue}
+          this.stock_search_match_keys.push(tmp)
+        }
+      })
+    },
+    addStockToTable() {
+      let user_id = this.searchKey
+      if (user_id !== '') {
+        axios.get("http://localhost:8080/api/family_user/queryStockByStockDetailId", {
+          params: {
+            "stock_detail_id": this.stock_search_key
           }
         }).then(resp => {
           this.searchMatchKeys = []
           let respData = resp.data
-          for (let i = 0; i < respData.length; i++) {
-            let tmp_value = (respData[i])[this.selectType]
-            let user_id = (respData[i])['user_id']
-            let tmp = {"value": user_id, "label": tmp_value}
-            this.searchMatchKeys.push(tmp)
+          if (respData.length > 0) {
+            this.tmp_stock_detail_object = respData[0]
+            this.tmp_stock_detail_object.stock_holding_change = true
+            this.tmp_stock_detail_object.stock_holding_change_senior_manager = true
+            this.tmp_stock_detail_object.company_announcement = true
           }
         })
+        let stock_detail_id = this.stock_search_key
+        axios.get("http://localhost:8080/api/family_user/setting/emailSendConfig/upsertAllItemEmpy", {
+          params: {
+            "stock_detail_id": stock_detail_id,
+            "user_id": user_id
+          }
+        }).then(resp => {
+          console.log(resp.data)
+          if (resp.data > 0) {
+            this.stock_table_data.push(this.tmp_stock_detail_object)
+          }
+        })
+        this.stock_search_is_show = false
+      } else {
+        alert("请选择操作用户！")
       }
+    },
+    updateSearchSelect(key) {
+      axios.get("http://localhost:8080/api/family_user/user_query", {
+        params: {
+          "col_name": this.selectType,
+          "key": key
+        }
+      }).then(resp => {
+        this.searchMatchKeys = []
+        let respData = resp.data
+        for (let i = 0; i < respData.length; i++) {
+          let tmp_value = (respData[i])[this.selectType]
+          let user_id = (respData[i])['user_id']
+          let tmp = {"value": user_id, "label": tmp_value}
+          this.searchMatchKeys.push(tmp)
+        }
+      })
     }
   }
+}
 </script>
 
 <style scoped>
-  .select_object_item {
-    float: left;
-  }
+.select_object_item {
+  float: left;
+}
 
-  .select_object_div {
-    margin-top: 15px;
-  }
+.select_object_div {
+  margin-top: 15px;
+}
 
-  .selectType {
-    width: 150px;
-  }
+.selectType {
+  width: 150px;
+}
 
-  .search_div {
-    margin-top: 10px;
-  }
+.search_div {
+  margin-top: 10px;
+}
 
-  .searchKey {
-    width: 800px;
-  }
+.searchKey {
+  width: 800px;
+}
 
 </style>

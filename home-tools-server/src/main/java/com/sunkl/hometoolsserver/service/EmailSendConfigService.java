@@ -1,7 +1,10 @@
 package com.sunkl.hometoolsserver.service;
 
+import com.sunkl.hometoolsserver.dao.EmailMsg;
 import com.sunkl.hometoolsserver.dao.EmailSendConfig;
+import com.sunkl.hometoolsserver.dao.FamilyUser;
 import com.sunkl.hometoolsserver.mapper.EmailSendConfigMapper;
+import com.sunkl.hometoolsserver.utils.EmailUtils;
 import com.sunkl.hometoolsserver.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,14 @@ import java.util.List;
 public class EmailSendConfigService {
     @Autowired
     EmailSendConfigMapper emailSendConfigMapper;
+    @Autowired
+    EmailUtils emailUtils;
+
+/*    public String sendEmail(EmailMsg emailMsg) {
+        emailUtils.send(emailMsg);
+        return "";
+    }*/
+
     public int upsertBaseConfig(String userId, String itemType, String itemMsg) {
         String currentDateTime = TimeUtils.getCurrentDateTime();
         EmailSendConfig emailSendConfig = new EmailSendConfig(new Integer(-1), new Integer(userId), itemType, "", "", "", itemMsg, currentDateTime, currentDateTime);

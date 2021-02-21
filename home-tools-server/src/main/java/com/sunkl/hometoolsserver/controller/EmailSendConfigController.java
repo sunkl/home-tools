@@ -4,13 +4,19 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.sunkl.hometoolsserver.dao.EmailMsg;
 import com.sunkl.hometoolsserver.dao.EmailSendConfig;
+import com.sunkl.hometoolsserver.dao.FamilyUser;
 import com.sunkl.hometoolsserver.dao.StockDetail;
+import com.sunkl.hometoolsserver.service.EmailMsgService;
 import com.sunkl.hometoolsserver.service.EmailSendConfigService;
+import com.sunkl.hometoolsserver.service.FamilyUserService;
 import com.sunkl.hometoolsserver.service.StockDetailService;
 import com.sunkl.hometoolsserver.utils.JSONUtils;
 import com.sunkl.hometoolsserver.utils.TimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -18,11 +24,25 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/family_user")
+@PropertySource("classpath:application.properties")
 public class EmailSendConfigController {
     @Autowired
     EmailSendConfigService emailSendConfigService;
     @Autowired
     StockDetailService stockDetailService;
+    @Autowired
+    FamilyUserService familyUserService;
+    @Autowired
+    EmailMsgService emailMsgService;
+    @Value("spring.mail.username")
+    String emailFromUser;
+
+    @CrossOrigin
+    @GetMapping("/setting/emailSendConfig/emailSendTest")
+    public String emailSendTest(@RequestParam("user_id") String userId) {
+        emailMsgService.testSendEmailMsg(userId);
+        return "true";
+    }
 
     @CrossOrigin
     @GetMapping("/setting/emailSendConfig/queryItemMsgByUserIdItemType")
