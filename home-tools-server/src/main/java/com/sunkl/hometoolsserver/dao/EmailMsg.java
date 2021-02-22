@@ -90,4 +90,11 @@ public class EmailMsg {
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime == null ? null : updateTime.trim();
     }
+
+    public EmailMsg(String srcAddress, String targetAddress, String emailObject, String emailMsg) {
+        this.srcAddress = srcAddress;
+        this.targetAddress = targetAddress;
+        this.emailObject = emailObject;
+        this.emailMsg = emailMsg;
+    }
 }

@@ -29,14 +29,14 @@ public class EmailTest {
 
     @Test
     public void test2() throws MessagingException {
-        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-
-        helper.setFrom("934926112@qq.com");//发送人
-        helper.setTo("t_cyan@139.com");//接收人
-        helper.setSubject("股票预警");//标题
-        String tbale = com.sunkl.hometoolsserver.dao.email.html.Test.testStr();
-        helper.setText("<html><body><h1>公司公告<h1><hr/><h1>股东信息<h1><hr/>" + tbale + "</body></html>", true);//发送的内容
-        javaMailSender.send(mimeMessage);
+//        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+//        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+//
+//        helper.setFrom("934926112@qq.com");//发送人
+//        helper.setTo("t_cyan@139.com");//接收人
+//        helper.setSubject("股票预警");//标题
+//        String tbale = com.sunkl.hometoolsserver.dao.email.html.Test.testStr();
+//        helper.setText("<html><body><h1>公司公告<h1><hr/><h1>股东信息<h1><hr/>" + tbale + "</body></html>", true);//发送的内容
+//        javaMailSender.send(mimeMessage);
     }
 }

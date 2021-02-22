@@ -1,6 +1,8 @@
 package com.sunkl.hometoolsserver.dao.email.html
 
-case class HTMLScrpt() {
+import com.sunkl.hometoolsserver.dao.FamilyUser
+
+case class HTMLScrpt(familyUser: FamilyUser) {
   private[this] var tables = Map[Int, HtmlTable]()
   private var index = 1;
 
@@ -9,8 +11,29 @@ case class HTMLScrpt() {
     index += 1;
   }
 
-  def addTable(title: Array[String], data: Array[Array[String]]): Unit = {
-    val table = new HtmlTable(title, data, 2)
+  def addTable(title: String, tableColName: Array[String], data: Array[Array[String]]): HTMLScrpt = {
+    val table = new HtmlTable(tableColName, data, title, 2)
     this.addTable(table)
+    this
+  }
+
+  def bodyScript(): String = {
+    if (index >= 1) {
+      (1 until index).map(tmp => tables(tmp).toHtml()).mkString("\n")
+    } else {
+      ""
+    }
+  }
+
+  def toHtmlScript(): String = {
+    s"""
+       |<html>
+       |  <body>
+       |   尊敬的${familyUser.getNiceName}:
+       |  <p>&nbsp;&nbsp;&nbsp;&nbsp;今日股票消息速递</p>
+       |  ${bodyScript()}
+       |  </body>
+       |</html>
+       |""".stripMargin
   }
 }

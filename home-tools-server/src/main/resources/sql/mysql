@@ -1,3 +1,15 @@
+CREATE TABLE `email_msg` (
+  `email_msg_id` int(11) NOT NULL,
+  `src_address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `target_address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `email_object` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `email_msg` text COLLATE utf8_bin,
+  `is_send` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `send_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `create_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `update_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`email_msg_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 CREATE TABLE `email_send_config` (
   `email_send_config_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,

@@ -21,6 +21,10 @@ public class FamilyUserService {
         return result;
     }
 
+    public FamilyUser findUserByUserId(String userId) {
+        return this.findUserByCondition("user_id='" + userId + "'").get(0);
+    }
+
     public List<FamilyUser> findUserByCondition(String condition) {
         return familyUserMapper.selectUserByCondition(condition);
     }
