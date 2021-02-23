@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunkl.hometoolsserver.mapper.StockHolderChangeMapper" >
+  <resultMap id="BaseResultMap" type="com.sunkl.hometoolsserver.dao.StockHolderChange" >
+    <result column="shcode" property="shcode" jdbcType="VARCHAR" />
+    <result column="company_code" property="companyCode" jdbcType="VARCHAR" />
+    <result column="scode" property="scode" jdbcType="VARCHAR" />
+    <result column="close" property="close" jdbcType="VARCHAR" />
+    <result column="change_percent" property="changePercent" jdbcType="VARCHAR" />
+    <result column="sname" property="sname" jdbcType="VARCHAR" />
+    <result column="share_hd_name" property="shareHdName" jdbcType="VARCHAR" />
+    <result column="increase_or_decrease" property="increaseOrDecrease" jdbcType="VARCHAR" />
+    <result column="change_num" property="changeNum" jdbcType="VARCHAR" />
+    <result column="proportion_in_circulating_shares" property="proportionInCirculatingShares" jdbcType="VARCHAR" />
+    <result column="market_level" property="marketLevel" jdbcType="VARCHAR" />
+    <result column="total_shareholding_after_change" property="totalShareholdingAfterChange" jdbcType="VARCHAR" />
+    <result column="ratio_of_total_equity_after_change" property="ratioOfTotalEquityAfterChange" jdbcType="VARCHAR" />
+    <result column="num_shares_in_circulation_after_change" property="numSharesInCirculationAfterChange" jdbcType="VARCHAR" />
+    <result column="proportion_circulating_shares_after_change" property="proportionCirculatingSharesAfterChange" jdbcType="VARCHAR" />
+    <result column="change_start_date" property="changeStartDate" jdbcType="VARCHAR" />
+    <result column="change_end_date" property="changeEndDate" jdbcType="VARCHAR" />
+    <result column="notice_date" property="noticeDate" jdbcType="VARCHAR" />
+    <result column="proportion_in_total_share_capital" property="proportionInTotalShareCapital" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByCondition" resultMap="BaseResultMap">
+    select *
+    from stock_holder_change
+    where ${condition}
+  </select>
+
+  <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.StockHolderChange" >
+    insert into stock_holder_change (shcode, company_code, scode, 
+      close, change_percent, sname, 
+      share_hd_name, increase_or_decrease, change_num, 
+      proportion_in_circulating_shares, market_level, 
+      total_shareholding_after_change, ratio_of_total_equity_after_change, 
+      num_shares_in_circulation_after_change, proportion_circulating_shares_after_change, 
+      change_start_date, change_end_date, notice_date, 
+      proportion_in_total_share_capital)
+    values (#{shcode,jdbcType=VARCHAR}, #{companyCode,jdbcType=VARCHAR}, #{scode,jdbcType=VARCHAR}, 
+      #{close,jdbcType=VARCHAR}, #{changePercent,jdbcType=VARCHAR}, #{sname,jdbcType=VARCHAR}, 
+      #{shareHdName,jdbcType=VARCHAR}, #{increaseOrDecrease,jdbcType=VARCHAR}, #{changeNum,jdbcType=VARCHAR}, 
+      #{proportionInCirculatingShares,jdbcType=VARCHAR}, #{marketLevel,jdbcType=VARCHAR}, 
+      #{totalShareholdingAfterChange,jdbcType=VARCHAR}, #{ratioOfTotalEquityAfterChange,jdbcType=VARCHAR}, 
+      #{numSharesInCirculationAfterChange,jdbcType=VARCHAR}, #{proportionCirculatingSharesAfterChange,jdbcType=VARCHAR}, 
+      #{changeStartDate,jdbcType=VARCHAR}, #{changeEndDate,jdbcType=VARCHAR}, #{noticeDate,jdbcType=VARCHAR}, 
+      #{proportionInTotalShareCapital,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.sunkl.hometoolsserver.dao.StockHolderChange" >
+    insert into stock_holder_change
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shcode != null" >
+        shcode,
+      </if>
+      <if test="companyCode != null" >
+        company_code,
+      </if>
+      <if test="scode != null" >
+        scode,
+      </if>
+      <if test="close != null" >
+        close,
+      </if>
+      <if test="changePercent != null" >
+        change_percent,
+      </if>
+      <if test="sname != null" >
+        sname,
+      </if>
+      <if test="shareHdName != null" >
+        share_hd_name,
+      </if>
+      <if test="increaseOrDecrease != null" >
+        increase_or_decrease,
+      </if>
+      <if test="changeNum != null" >
+        change_num,
+      </if>
+      <if test="proportionInCirculatingShares != null" >
+        proportion_in_circulating_shares,
+      </if>
+      <if test="marketLevel != null" >
+        market_level,
+      </if>
+      <if test="totalShareholdingAfterChange != null" >
+        total_shareholding_after_change,
+      </if>
+      <if test="ratioOfTotalEquityAfterChange != null" >
+        ratio_of_total_equity_after_change,
+      </if>
+      <if test="numSharesInCirculationAfterChange != null" >
+        num_shares_in_circulation_after_change,
+      </if>
+      <if test="proportionCirculatingSharesAfterChange != null" >
+        proportion_circulating_shares_after_change,
+      </if>
+      <if test="changeStartDate != null" >
+        change_start_date,
+      </if>
+      <if test="changeEndDate != null" >
+        change_end_date,
+      </if>
+      <if test="noticeDate != null" >
+        notice_date,
+      </if>
+      <if test="proportionInTotalShareCapital != null" >
+        proportion_in_total_share_capital,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shcode != null" >
+        #{shcode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null" >
+        #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="scode != null" >
+        #{scode,jdbcType=VARCHAR},
+      </if>
+      <if test="close != null" >
+        #{close,jdbcType=VARCHAR},
+      </if>
+      <if test="changePercent != null" >
+        #{changePercent,jdbcType=VARCHAR},
+      </if>
+      <if test="sname != null" >
+        #{sname,jdbcType=VARCHAR},
+      </if>
+      <if test="shareHdName != null" >
+        #{shareHdName,jdbcType=VARCHAR},
+      </if>
+      <if test="increaseOrDecrease != null" >
+        #{increaseOrDecrease,jdbcType=VARCHAR},
+      </if>
+      <if test="changeNum != null" >
+        #{changeNum,jdbcType=VARCHAR},
+      </if>
+      <if test="proportionInCirculatingShares != null" >
+        #{proportionInCirculatingShares,jdbcType=VARCHAR},
+      </if>
+      <if test="marketLevel != null" >
+        #{marketLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="totalShareholdingAfterChange != null" >
+        #{totalShareholdingAfterChange,jdbcType=VARCHAR},
+      </if>
+      <if test="ratioOfTotalEquityAfterChange != null" >
+        #{ratioOfTotalEquityAfterChange,jdbcType=VARCHAR},
+      </if>
+      <if test="numSharesInCirculationAfterChange != null" >
+        #{numSharesInCirculationAfterChange,jdbcType=VARCHAR},
+      </if>
+      <if test="proportionCirculatingSharesAfterChange != null" >
+        #{proportionCirculatingSharesAfterChange,jdbcType=VARCHAR},
+      </if>
+      <if test="changeStartDate != null" >
+        #{changeStartDate,jdbcType=VARCHAR},
+      </if>
+      <if test="changeEndDate != null" >
+        #{changeEndDate,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeDate != null" >
+        #{noticeDate,jdbcType=VARCHAR},
+      </if>
+      <if test="proportionInTotalShareCapital != null" >
+        #{proportionInTotalShareCapital,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

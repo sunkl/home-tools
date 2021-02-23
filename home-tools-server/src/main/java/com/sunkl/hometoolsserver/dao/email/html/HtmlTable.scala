@@ -9,10 +9,10 @@ class HtmlTable(
                  var tableColName: Array[String],
                  var tableBody: Array[Array[String]],
                  var title: String,
-                 var step: Int
+                 var step: Int = 2
                ) {
 
-  def toHtml(): String = {
+  def toOneHtml(): String = {
     val tableSpace = " ".repeatNum(step * HtmlUtils.spaceNumPerStemp)
     val trSpace = " ".repeatNum((step + 1) * HtmlUtils.spaceNumPerStemp)
     val tdOrThSpace = " ".repeatNum((step + 2) * HtmlUtils.spaceNumPerStemp)
@@ -26,7 +26,7 @@ class HtmlTable(
        |<p>
        |<b>${title}</b>
        |</hr>
-       |${tableSpace}<table width='800px'>
+       |${tableSpace}<table width='1700px'>
        |${trSpace}<tr  bgcolor="#8E8E8E">
        |${ths}
        |${trSpace}</tr>
@@ -34,6 +34,14 @@ class HtmlTable(
        |${tableSpace}</table>
        |</p>
        |""".stripMargin
+  }
+  def toMutiHtml():String={
+
+    """
+      |<table>
+      |
+      |</table
+      |""".stripMargin
   }
 }
 

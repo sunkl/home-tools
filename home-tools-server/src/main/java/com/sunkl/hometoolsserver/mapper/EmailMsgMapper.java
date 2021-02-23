@@ -2,13 +2,18 @@ package com.sunkl.hometoolsserver.mapper;
 
 import com.sunkl.hometoolsserver.dao.EmailMsg;
 import com.sunkl.hometoolsserver.dao.EmailMsgExample;
+
 import java.util.List;
 
+import com.sunkl.hometoolsserver.dao.EmailSendConfig;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
 @Mapper
 public interface EmailMsgMapper {
     List<EmailMsg> selectEmailMsgByCondition(String condition);
+
+    int insertIntoAll(List<EmailMsg> emailSendConfig);
 
     int countByExample(EmailMsgExample example);
 
@@ -21,6 +26,10 @@ public interface EmailMsgMapper {
     int insertSelective(EmailMsg record);
 
     List<EmailMsg> selectByExample(EmailMsgExample example);
+
+    List<EmailMsg> selectByCondition(String condition);
+
+    int updateIsSend(String emailMsgIds, String isSend, String updateTime);
 
     EmailMsg selectByPrimaryKey(Integer emailMsgId);
 

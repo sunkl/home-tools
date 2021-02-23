@@ -19,7 +19,7 @@ case class HTMLScrpt(familyUser: FamilyUser) {
 
   def bodyScript(): String = {
     if (index >= 1) {
-      (1 until index).map(tmp => tables(tmp).toHtml()).mkString("\n")
+      (1 until index).map(tmp => tables(tmp).toOneHtml()).mkString("\n")
     } else {
       ""
     }

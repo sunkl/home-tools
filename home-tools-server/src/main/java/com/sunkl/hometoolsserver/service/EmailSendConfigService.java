@@ -33,6 +33,10 @@ public class EmailSendConfigService {
         return emailSendConfigMapper.selectByCondition(String.format(" user_id = '%s' and item_type='%s'", userId, itemType));
     }
 
+    public List<EmailSendConfig> selectAll() {
+        return emailSendConfigMapper.selectByCondition("1=1");
+    }
+
     public List<EmailSendConfig> selectByUserId(String userId) {
         return emailSendConfigMapper.selectByCondition("user_id = '" + userId + "'");
     }
@@ -44,4 +48,6 @@ public class EmailSendConfigService {
     public int insertInto(EmailSendConfig emailSendConfig) {
         return emailSendConfigMapper.insertInto(emailSendConfig);
     }
+
+
 }

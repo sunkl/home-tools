@@ -1,5 +1,7 @@
 package com.sunkl.hometoolsserver.dao;
 
+import com.sunkl.hometoolsserver.utils.TimeUtils;
+
 public class EmailMsg {
     private Integer emailMsgId;
 
@@ -91,10 +93,27 @@ public class EmailMsg {
         this.updateTime = updateTime == null ? null : updateTime.trim();
     }
 
-    public EmailMsg(String srcAddress, String targetAddress, String emailObject, String emailMsg) {
+    public EmailMsg(Integer emailMsgId, String srcAddress, String targetAddress, String emailObject, String emailMsg, String isSend, String sendTime, String createTime, String updateTime) {
+        this.emailMsgId = emailMsgId;
         this.srcAddress = srcAddress;
         this.targetAddress = targetAddress;
         this.emailObject = emailObject;
         this.emailMsg = emailMsg;
+        this.isSend = isSend;
+        this.sendTime = sendTime;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
+    }
+
+    public EmailMsg(String srcAddress, String targetAddress, String emailObject, String emailMsg) {
+        String currentDateTime = TimeUtils.getCurrentDateTime();
+        this.srcAddress = srcAddress;
+        this.targetAddress = targetAddress;
+        this.emailObject = emailObject;
+        this.emailMsg = emailMsg;
+        this.isSend = "false";
+        this.sendTime = "";
+        this.setCreateTime(currentDateTime);
+        this.setUpdateTime(currentDateTime);
     }
 }
