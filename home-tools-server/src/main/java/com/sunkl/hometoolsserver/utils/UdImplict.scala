@@ -1,5 +1,6 @@
 package com.sunkl.hometoolsserver.utils
 
+import java.time.format.DateTimeFormatter
 import java.util
 
 object UdImplict {
@@ -9,6 +10,8 @@ object UdImplict {
     def repeatNum(num: Int): String = {
       StringUtils.repeatStr(input, num)
     }
+
+    def toDateTimeFromat: DateTimeFormatter = DateTimeFormatter.ofPattern(input)
 
     def swapHtml(htmlElement: String, step: Int = 0, isExpland: Boolean = false): String = {
       val valueSuffSpace = " ".repeatNum(step * HtmlUtils.spaceNumPerStemp)

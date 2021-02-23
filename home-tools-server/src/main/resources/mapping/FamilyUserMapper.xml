@@ -14,10 +14,10 @@
         <result column="create_time" jdbcType="VARCHAR" property="createTime"/>
         <result column="update_time" jdbcType="VARCHAR" property="updateTime"/>
     </resultMap>
-    <select id="selectUserByCondition"  resultMap="BaseResultMap">
+    <select id="selectUserByCondition" resultMap="BaseResultMap">
         select *
         from family_user
-        where ${condition_str}
+        where ${condition}
     </select>
     <select id="selectUserByColName" resultMap="BaseResultMap">
         select *

@@ -11,6 +11,11 @@
   <sql id="Base_Column_List" >
     task_id, task_name, corn_config, create_time, update_time
   </sql>
+  <select id="selectSTCByCondition"  resultMap="BaseResultMap">
+    select *
+    from schuler_task_config
+    where ${condition_str}
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
