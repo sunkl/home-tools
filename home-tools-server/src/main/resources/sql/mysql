@@ -1,5 +1,5 @@
 CREATE TABLE `email_msg` (
-  `email_msg_id` int(11) NOT NULL,
+  `email_msg_id` int(11) NOT NULL AUTO_INCREMENT,
   `src_address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `target_address` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `email_object` varchar(255) COLLATE utf8_bin DEFAULT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE `email_msg` (
   `create_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `update_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`email_msg_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 CREATE TABLE `email_send_config` (
   `email_send_config_id` int(11) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
@@ -36,14 +36,21 @@ CREATE TABLE `family_user` (
   `update_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+CREATE TABLE `schuler_task_config` (
+  `task_id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `corn_config` varchar(255) COLLATE utf8_bin DEFAULT NULL,
+  `create_time` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `update_time` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`task_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 CREATE TABLE `stock_detail` (
   `stock_detail_id` int(11) NOT NULL AUTO_INCREMENT,
   `stock_code` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `stock_name` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   `create_time` varchar(255) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`stock_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 CREATE TABLE `stock_holder_change` (
   `shcode` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
   `company_code` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '公司代码',
@@ -65,7 +72,6 @@ CREATE TABLE `stock_holder_change` (
   `notice_date` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '公告日期',
   `proportion_in_total_share_capital` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT ' 占总股本比例（%）持股变动信息'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
-
 CREATE TABLE `stock_holding_change_senior_managerment` (
   `change_ratio` varchar(1024) COLLATE utf8_bin DEFAULT NULL,
   `holder_name` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '董监高人员姓名',
@@ -82,4 +88,11 @@ CREATE TABLE `stock_holding_change_senior_managerment` (
   `change_amount` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '变动金额',
   `job` varchar(1024) COLLATE utf8_bin DEFAULT NULL COMMENT '职务'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='高管持股变更信息';
-
+CREATE TABLE `tools_model_config` (
+  `tools_id` int(11) NOT NULL,
+  `tools_code` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `tools_name` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `update_time` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  `create_time` varchar(45) COLLATE utf8_bin DEFAULT NULL,
+  PRIMARY KEY (`tools_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
