@@ -1,5 +1,9 @@
 package com.sunkl.hometoolsserver.utils
 
+import com.alibaba.fastjson.{JSON, JSONArray, JSONObject}
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.util.JSONPObject
+
 import java.time.format.DateTimeFormatter
 import java.util
 
@@ -7,6 +11,8 @@ object UdImplict {
 
 
   implicit class ExtendString(input: String) {
+    val om = new ObjectMapper()
+
     def repeatNum(num: Int): String = {
       StringUtils.repeatStr(input, num)
     }
@@ -21,6 +27,26 @@ object UdImplict {
       } else {
         s"<$htmlElement>\n${valueSuffSpace}$input\n${elementSuffSpace}</$htmlElement>"
       }
+    }
+
+    def toJsonObject(): JSONObject = {
+      if (input.isNullEmptyTrim) {
+        JSON.parseObject("{}")
+      } else {
+        JSON.parseObject(input)
+      }
+    }
+
+    def toJsonArray(): JSONArray = {
+      if (input.isNullEmptyTrim) {
+        JSON.parseArray("[]")
+      } else {
+        JSON.parseArray(input)
+      }
+    }
+
+    def parseObject[T]: T = {
+      JSON.parseObject(input, classOf[T])
     }
   }
 

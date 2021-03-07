@@ -5,6 +5,7 @@ import Login from "../Login";
 import UserRegister from "../UserRegister";
 import AppMain from "../AppMain";
 import EmailSend from "../components/setting/EmailSend";
+import ScrawlerSetting from "../components/setting/ScrawlerSetting";
 
 Vue.use(Router)
 
@@ -34,6 +35,12 @@ export default new Router({
       path:"/setting/emailsend",
       name:"emailsend",
       component:EmailSend
+    },
+    {
+      path:"/setting/scrawlersetting",
+      name:"scrawlersetting",
+      component:ScrawlerSetting
     }
+
   ]
 })

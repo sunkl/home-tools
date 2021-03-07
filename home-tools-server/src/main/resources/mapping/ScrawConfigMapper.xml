@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sunkl.hometoolsserver.mapper.ScrawConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.sunkl.hometoolsserver.dao.ScrawConfig" >
+    <id column="scraw_id" property="scrawId" jdbcType="INTEGER" />
+    <result column="scraw_name" property="scrawName" jdbcType="VARCHAR" />
+    <result column="scraw_desc" property="scrawDesc" jdbcType="VARCHAR" />
+    <result column="scraw_base_url" property="scrawBaseUrl" jdbcType="VARCHAR" />
+    <result column="scraw_params" property="scrawParams" jdbcType="VARCHAR" />
+    <result column="scraw_result_schema" property="scrawResultSchema" jdbcType="VARCHAR" />
+    <result column="scaw_persist_config" property="scawPersistConfig" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    scraw_id, scraw_name, scraw_desc, scraw_base_url, scraw_params, scraw_result_schema, 
+    scaw_persist_config, create_time, update_time
+  </sql>
+  <select id="selectByCondition">
+    select *
+    from scraw_config
+    where ${conditionStr}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from scraw_config
+    where scraw_id = #{scrawId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from scraw_config
+    where scraw_id = #{scrawId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.ScrawConfig" >
+    insert into scraw_config (scraw_id, scraw_name, scraw_desc, 
+      scraw_base_url, scraw_params, scraw_result_schema, 
+      scaw_persist_config, create_time, update_time
+      )
+    values (#{scrawId,jdbcType=INTEGER}, #{scrawName,jdbcType=VARCHAR}, #{scrawDesc,jdbcType=VARCHAR}, 
+      #{scrawBaseUrl,jdbcType=VARCHAR}, #{scrawParams,jdbcType=VARCHAR}, #{scrawResultSchema,jdbcType=VARCHAR}, 
+      #{scawPersistConfig,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.sunkl.hometoolsserver.dao.ScrawConfig" >
+    insert into scraw_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scrawId != null" >
+        scraw_id,
+      </if>
+      <if test="scrawName != null" >
+        scraw_name,
+      </if>
+      <if test="scrawDesc != null" >
+        scraw_desc,
+      </if>
+      <if test="scrawBaseUrl != null" >
+        scraw_base_url,
+      </if>
+      <if test="scrawParams != null" >
+        scraw_params,
+      </if>
+      <if test="scrawResultSchema != null" >
+        scraw_result_schema,
+      </if>
+      <if test="scawPersistConfig != null" >
+        scaw_persist_config,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scrawId != null" >
+        #{scrawId,jdbcType=INTEGER},
+      </if>
+      <if test="scrawName != null" >
+        #{scrawName,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawDesc != null" >
+        #{scrawDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawBaseUrl != null" >
+        #{scrawBaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawParams != null" >
+        #{scrawParams,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawResultSchema != null" >
+        #{scrawResultSchema,jdbcType=VARCHAR},
+      </if>
+      <if test="scawPersistConfig != null" >
+        #{scawPersistConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.sunkl.hometoolsserver.dao.ScrawConfig" >
+    update scraw_config
+    <set >
+      <if test="scrawName != null" >
+        scraw_name = #{scrawName,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawDesc != null" >
+        scraw_desc = #{scrawDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawBaseUrl != null" >
+        scraw_base_url = #{scrawBaseUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawParams != null" >
+        scraw_params = #{scrawParams,jdbcType=VARCHAR},
+      </if>
+      <if test="scrawResultSchema != null" >
+        scraw_result_schema = #{scrawResultSchema,jdbcType=VARCHAR},
+      </if>
+      <if test="scawPersistConfig != null" >
+        scaw_persist_config = #{scawPersistConfig,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where scraw_id = #{scrawId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.sunkl.hometoolsserver.dao.ScrawConfig" >
+    update scraw_config
+    set scraw_name = #{scrawName,jdbcType=VARCHAR},
+      scraw_desc = #{scrawDesc,jdbcType=VARCHAR},
+      scraw_base_url = #{scrawBaseUrl,jdbcType=VARCHAR},
+      scraw_params = #{scrawParams,jdbcType=VARCHAR},
+      scraw_result_schema = #{scrawResultSchema,jdbcType=VARCHAR},
+      scaw_persist_config = #{scawPersistConfig,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR}
+    where scraw_id = #{scrawId,jdbcType=INTEGER}
+  </update>
+</mapper>
