@@ -44,10 +44,10 @@ object UdImplict {
         JSON.parseArray(input)
       }
     }
-
-    def parseObject[T]: T = {
-      JSON.parseObject(input, classOf[T])
-    }
+//
+//    def parseJsonObject[T](): T = {
+//      JSON.parseObject(input,classOf[T])
+//    }
   }
 
   implicit class ExtendArrayStr(input: Array[String]) {

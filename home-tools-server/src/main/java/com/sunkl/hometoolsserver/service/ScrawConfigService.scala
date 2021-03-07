@@ -1,5 +1,6 @@
 package com.sunkl.hometoolsserver.service
 
+import com.alibaba.fastjson.JSON
 import com.sunkl.hometoolsserver.dao.{ResultSchema, ScrawConfig}
 import com.sunkl.hometoolsserver.mapper.ScrawConfigMapper
 import com.sunkl.hometoolsserver.utils.JSONUtils
@@ -72,7 +73,9 @@ class ScrawConfigService @Autowired()(
    */
   def addAndUpdateReusltCol(scrawConfigId: Integer, colName: String, colDataType: String, colDesc: String): Boolean = {
     val scrawConfigTmp = scrawConfigMapper.selectByPrimaryKey(scrawConfigId)
-    var resultSchema: Map[String, ResultSchema] = scrawConfigTmp.getScrawResultSchema.parseObject[Array[ResultSchema]].map(element => (element.colName, element)).toMap
+    var resultSchema: Map[String, ResultSchema] = JSON.parseArray[ResultSchema](scrawConfigTmp.getScrawResultSchema, classOf[ResultSchema])
+      .iterator().asScala.toArray
+      .map(element => (element.colName, element)).toMap
     resultSchema += (colName -> ResultSchema(colName, colDataType, colDesc))
     val jsonStr = JSONUtils.object2JsonString(resultSchema.values.toArray)
     scrawConfigTmp.setScrawResultSchema(jsonStr)
@@ -87,7 +90,9 @@ class ScrawConfigService @Autowired()(
    */
   def deleteResultCol(scrawConfigId: Integer, colName: String): Boolean = {
     val scrawConfig = scrawConfigMapper.selectByPrimaryKey(scrawConfigId)
-    var resultSchemaMap: Map[String, ResultSchema] = scrawConfig.getScrawResultSchema.parseObject[Array[ResultSchema]].map(element => (element.colName, element)).toMap
+    var resultSchemaMap: Map[String, ResultSchema] = JSON.parseArray[ResultSchema](scrawConfig.getScrawResultSchema, classOf[ResultSchema])
+      .iterator().asScala
+      .toArray.map(element => (element.colName, element)).toMap
     resultSchemaMap -= colName
     val jsonStr = JSONUtils.object2JsonString(resultSchemaMap.values.toArray)
     scrawConfig.setScrawResultSchema(jsonStr)

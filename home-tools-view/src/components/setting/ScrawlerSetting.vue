@@ -7,7 +7,7 @@
                  filterable
                  placeholder="其输入搜索值">
         <el-option
-          v-for="item in scraw_opt"
+          v-for="item in scraw_name_opt"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -20,7 +20,7 @@
           <span>基本配置</span>
         </div>
         <div>
-          <table  >
+          <table>
             <tr>
               <td colspan="2">
                 <el-input placeholder="请输入内容" v-model="scraw_name_input" style="width: 500px">
@@ -45,7 +45,8 @@
             <tr>
               <td colspan="5">数据库
                 <el-radio v-model="input_db_type" v-on:change="input_db_type_change" label="input_db_type_select">
-                  <el-select v-model="db_name" clearable placeholder="请选择" v-bind:disabled="db_select_is_able" style="width: 350px">
+                  <el-select v-model="db_name" clearable placeholder="请选择" v-bind:disabled="db_select_is_able"
+                             style="width: 350px">
                     <el-option
                       v-for="item in db_name_search_result"
                       :key="item.value"
@@ -55,7 +56,8 @@
                   </el-select>
                 </el-radio>
                 <el-radio v-model="input_db_type" v-on:change="input_db_type_change" label="input_db_type_input">
-                  <el-input v-model="db_name" placeholder="请输入内容" v-bind:disabled="db_input_is_able" style="width: 350px"></el-input>
+                  <el-input v-model="db_name" placeholder="请输入内容" v-bind:disabled="db_input_is_able"
+                            style="width: 350px"></el-input>
                 </el-radio>
               </td>
 
@@ -64,7 +66,8 @@
               <td colspan="5">数据表
                 <el-radio v-model="input_table_type" v-on:change="input_table_type_change"
                           label="input_table_type_select">
-                  <el-select v-model="table_name" clearable placeholder="请选择" v-bind:disabled="table_select_is_able" style="width: 350px">
+                  <el-select v-model="table_name" clearable placeholder="请选择" v-bind:disabled="table_select_is_able"
+                             style="width: 350px">
                     <el-option
                       v-for="item in table_name_search_result"
                       :key="item.value"
@@ -75,7 +78,8 @@
                 </el-radio>
                 <el-radio v-model="input_table_type" v-on:change="input_table_type_change"
                           label="input_table_type_input">
-                  <el-input v-model="table_name" placeholder="请输入内容" v-bind:disabled="table_input_is_able" style="width: 350px"></el-input>
+                  <el-input v-model="table_name" placeholder="请输入内容" v-bind:disabled="table_input_is_able"
+                            style="width: 350px"></el-input>
                 </el-radio>
 
               </td>
@@ -168,6 +172,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "ScrawlerSetting",
   data() {
@@ -195,13 +201,7 @@ export default {
       table_name: "",
       db_name_search_result: [],
       table_name_search_result: [],
-      scraw_opt: [{
-        label: "ddd",
-        value: "ddd"
-      }, {
-        label: "ddd1",
-        value: "ddd1"
-      }]
+      scraw_name_opt: []
     }
   },
   methods: {
@@ -224,7 +224,13 @@ export default {
       }
     },
     searchScrawName() {
-
+      axios.get("/api/setting/scraw_config/selectByLikeScrawName", {
+        params: {
+          "scraw_name": this.scraw_name_input
+        }
+      }).then(resp => {
+        this.scrresp.data
+      })
     }
   }
 }
