@@ -11,7 +11,7 @@ class EmailScheduling @Autowired()(
                                   ) {
 
   /*每5分钟更新一次定时任务配置*/
-  @Scheduled(cron = "0 0/5 * * * ? *")
+  @Scheduled(cron = "0 0/5 * * * ?")
   def createEmail(): Unit = {
     schdulerTaskConfigService.selectLastUpdateScheduler()
   }

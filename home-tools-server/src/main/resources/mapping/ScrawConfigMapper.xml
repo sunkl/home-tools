@@ -16,7 +16,7 @@
     scraw_id, scraw_name, scraw_desc, scraw_base_url, scraw_params, scraw_result_schema, 
     scaw_persist_config, create_time, update_time
   </sql>
-  <select id="selectByCondition">
+  <select id="selectByCondition" resultMap="BaseResultMap">
     select *
     from scraw_config
     where ${conditionStr}
