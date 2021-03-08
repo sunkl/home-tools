@@ -1,5 +1,9 @@
 package com.sunkl.hometoolsserver.dao;
 
+import com.sunkl.hometoolsserver.utils.TimeUtils;
+
+import java.sql.Time;
+
 public class ScrawConfig {
     private Integer scrawId;
 
@@ -89,5 +93,14 @@ public class ScrawConfig {
 
     public void setUpdateTime(String updateTime) {
         this.updateTime = updateTime == null ? null : updateTime.trim();
+    }
+
+    public ScrawConfig(String scrawName) {
+        this.scrawName = scrawName;
+        this.scrawParams = "[]";
+        this.scrawResultSchema = "[]";
+        this.scawPersistConfig = "{}";
+        this.createTime = TimeUtils.getCurrentDateTime();
+        this.updateTime = TimeUtils.getCurrentDateTime();
     }
 }

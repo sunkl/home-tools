@@ -32,11 +32,11 @@
     where scraw_id = #{scrawId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.sunkl.hometoolsserver.dao.ScrawConfig" >
-    insert into scraw_config (scraw_id, scraw_name, scraw_desc, 
+    insert into scraw_config (scraw_name, scraw_desc,
       scraw_base_url, scraw_params, scraw_result_schema, 
       scaw_persist_config, create_time, update_time
       )
-    values (#{scrawId,jdbcType=INTEGER}, #{scrawName,jdbcType=VARCHAR}, #{scrawDesc,jdbcType=VARCHAR}, 
+    values (#{scrawName,jdbcType=VARCHAR}, #{scrawDesc,jdbcType=VARCHAR},
       #{scrawBaseUrl,jdbcType=VARCHAR}, #{scrawParams,jdbcType=VARCHAR}, #{scrawResultSchema,jdbcType=VARCHAR}, 
       #{scawPersistConfig,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}
       )

@@ -11,9 +11,21 @@ import collection.JavaConverters._
 import com.sunkl.hometoolsserver.utils.UdImplict._
 
 @Service
-class ScrawConfigService @Autowired()(
-                                       val scrawConfigMapper: ScrawConfigMapper
-                                     ) {
+class ScrawConfigService @Autowired()(val scrawConfigMapper: ScrawConfigMapper) {
+  def createScraw(scrawName: String): String = {
+    val isNotExist = scrawConfigMapper.selectByCondition(s"scraw_name='${scrawName}'").size() == 0
+    val isSucess = if (isNotExist) {
+      scrawConfigMapper.insert(new ScrawConfig(scrawName)) > 0
+    } else {
+      false
+    }
+    isSucess.toString
+  }
+
+  def deleteById(id: Integer): Boolean = {
+    scrawConfigMapper.deleteByPrimaryKey(id) > 0
+  }
+
   /**
    * 查询所有
    *

@@ -52,4 +52,17 @@ class ScrawConfigCondition @Autowired()(
     scrawConfigService.updateScrawBaseConfig(scrawId, scrawURL, scrawPersistType, dbName, tableName)
     JSONUtils.object2JsonString(scrawConfigService.selectByScrawId(scrawId))
   }
+
+  @CrossOrigin
+  @GetMapping(Array("/createScrawName"))
+  def createScrawName(@RequestParam("scraw_name") scrawName: String): String = {
+    scrawConfigService.createScraw(scrawName)
+  }
+
+  @CrossOrigin
+  @GetMapping(Array("/deleteById"))
+  def deleteById(@RequestParam("scraw_id") scrawId: Integer): Boolean = {
+    scrawConfigService.deleteById(scrawId)
+  }
+
 }
