@@ -31,16 +31,15 @@
               </td>
             </tr>
             <tr>
-              <td colspan="2">
-                <el-input placeholder="请输入内容" v-model="scraw_url" style="width: 500px">
+              <td >
+                <el-input placeholder="请输入内容" v-model="scraw_url" style="width: 830px">
                   <template slot="prepend">Http://</template>
                 </el-input>
               </td>
-              <td style="width: 20px"></td>
+            </tr>
+            <tr>
               <td>
-                写入类型
-              </td>
-              <td>
+                <span>保存位置&nbsp;&nbsp;</span>
                 <el-select v-model="persist_type" clearable placeholder="请选择">
                   <el-option
                     v-for="item in persist_type_opt"
@@ -93,7 +92,12 @@
               </td>
             </tr>
             <tr>
-              <td colspan="5">
+              <td >
+                <span>爬虫描述&nbsp;&nbsp;</span><el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="scraw_desc" style="width: 760px"></el-input>
+              </td>
+            </tr>
+            <tr>
+              <td >
                 <el-button type="success" style="width: 300px" v-on:click="submit_base_config">提交</el-button>
               </td>
             </tr>
@@ -264,6 +268,7 @@ export default {
       create_is_able: true,
       update_is_able: false,
       create_scraw_name: "",
+      scraw_desc:"",
       scraw_id_select: "",
       scraw_url: "",
       scraw_params_opt: [],
@@ -417,8 +422,7 @@ export default {
       console.log(resp_data["scraw_params"])
       this.scraw_result_cols_opt = JSON.parse(resp_data["scraw_result_schema"])
       this.scraw_params_opt = JSON.parse(resp_data["scraw_params"])
-      let persistConfig = JSON.parse(resp_data["scraw_persist_config"])
-      this.scraw_url = persistConfig["scraw_url"]
+      let persistConfig = JSON.parse(resp_data["scaw_persist_config"])
       this.persist_type = persistConfig["scraw_persist_type"]
       this.db_name = persistConfig["scraw_db_name"]
       this.table_name = persistConfig["scraw_table_name"]
