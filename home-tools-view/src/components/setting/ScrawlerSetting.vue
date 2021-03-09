@@ -528,6 +528,9 @@ export default {
     },
     create_or_update_scraw_base_config() {
       let scraw_id = this.scraw_id_select
+      if(this.table_name_select===''){
+        scraw_id=-1
+      }
       let scraw_url = this.scraw_url
       let scraw_persist_type = this.persist_type
       let dbName = ""

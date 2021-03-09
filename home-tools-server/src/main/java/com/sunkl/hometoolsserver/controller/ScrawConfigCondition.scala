@@ -64,13 +64,14 @@ class ScrawConfigCondition @Autowired()(
                                 @RequestParam("action_frequency_unit") actionFrequencyUnit: String
                               ): String = {
     val scrawPersistConfig = s"""{"scraw_persist_type":"${scrawPersistType}","scraw_db_name":"${dbName}","scraw_table_name":"${tableName}"}"""
-    if (createOrUpdate.isNotNullEmptyTrim && createOrUpdate.trim.equals("update")) {
+    if ( scrawId>0) {
       scrawConfigService.updateScrawBaseConfig(new ScrawConfig(
         scrawId, crateScrawName,scrawDesc, scrawURL, null, null, scrawPersistConfig, scrawActionStartTime, actionFrequencyNum, actionFrequencyUnit
       ))
       JSONUtils.object2JsonString(scrawConfigService.selectByScrawId(scrawId))
     } else {
-      scrawConfigService.createScraw(new ScrawConfig(crateScrawName, scrawDesc, scrawURL, "[]", "[]", scrawPersistConfig, scrawActionStartTime, actionFrequencyNum, actionFrequencyUnit))
+      scrawConfigService.createScraw(new ScrawConfig(crateScrawName, scrawDesc, scrawURL, "[]", "[]", "{}", scrawActionStartTime, actionFrequencyNum, actionFrequencyUnit))
+      JSONUtils.object2JsonString(scrawConfigService.selectByScrawName(crateScrawName))
     }
   }
 

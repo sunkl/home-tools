@@ -41,10 +41,10 @@
         values (#{scrawName,jdbcType=VARCHAR}, #{scrawDesc,jdbcType=VARCHAR},
                 #{scrawBaseUrl,jdbcType=VARCHAR}, #{scrawParams,jdbcType=VARCHAR},
                 #{scrawResultSchema,jdbcType=VARCHAR},
-                #{scrawActionStartTime ,jdbcType=VARCHAR},
-                #{actionFrequencyNum  ,jdbcType=VARCHAR},
-                #{actionFrequencyUnit ,jdbcType=VARCHAR},
-                #{scawPersistConfig,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
+                #{scawPersistConfig ,jdbcType=VARCHAR},
+                #{scrawActionStartTime  ,jdbcType=VARCHAR},
+                #{actionFrequencyNum ,jdbcType=VARCHAR},
+                #{actionFrequencyUnit,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" parameterType="com.sunkl.hometoolsserver.dao.ScrawConfig">
         insert into scraw_config

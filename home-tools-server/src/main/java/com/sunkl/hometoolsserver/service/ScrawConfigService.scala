@@ -50,14 +50,11 @@ class ScrawConfigService @Autowired()(val scrawConfigMapper: ScrawConfigMapper) 
   }
 
   def selectByScrawId(id: Integer): ScrawConfig = {
-    val scrawConfig = scrawConfigMapper.selectByPrimaryKey(id)
-    if (!scrawConfig.getScrawResultSchema.trim.startsWith("[") || !scrawConfig.getScrawResultSchema.trim.endsWith("]")) {
-      scrawConfig.setScrawResultSchema("[]")
-    }
-    if (!scrawConfig.getScrawParams.trim.startsWith("[") || !scrawConfig.getScrawParams.trim.endsWith("]")) {
-      scrawConfig.setScrawParams("{}")
-    }
-    scrawConfig
+    scrawConfigMapper.selectByPrimaryKey(id)
+  }
+
+  def selectByScrawName(name: String): ScrawConfig = {
+    scrawConfigMapper.selectByCondition(s"scraw_name='${name}'").asScala.head
   }
 
   /**
