@@ -62,11 +62,11 @@ class ScrawConfigCondition @Autowired()(
                                 @RequestParam("scraw_action_start_time") scrawActionStartTime: String,
                                 @RequestParam("action_frequency_num") actionFrequencyNum: String,
                                 @RequestParam("action_frequency_unit") actionFrequencyUnit: String
-                              ): Unit = {
+                              ): String = {
     val scrawPersistConfig = s"""{"scraw_persist_type":"${scrawPersistType}","scraw_db_name":"${dbName}","scraw_table_name":"${tableName}"}"""
     if (createOrUpdate.isNotNullEmptyTrim && createOrUpdate.trim.equals("update")) {
       scrawConfigService.updateScrawBaseConfig(new ScrawConfig(
-        scrawId, scrawDesc, crateScrawName, scrawURL, null, null, scrawPersistConfig, scrawActionStartTime, actionFrequencyNum, actionFrequencyUnit
+        scrawId, crateScrawName,scrawDesc, scrawURL, null, null, scrawPersistConfig, scrawActionStartTime, actionFrequencyNum, actionFrequencyUnit
       ))
       JSONUtils.object2JsonString(scrawConfigService.selectByScrawId(scrawId))
     } else {
@@ -74,28 +74,28 @@ class ScrawConfigCondition @Autowired()(
     }
   }
 
-  /*
-    /**
-     * 更新进本配置信息
-     *
-     * @param scrawId
-     * @param scrawURL
-     * @param scrawPersistType
-     * @param dbName
-     * @param tableName
-     * @return
-     */
-    @CrossOrigin
-    @GetMapping(Array("/updateScrawBaseConfig"))
-    def updateScrawBaseConfig(
-                               @RequestParam("scraw_id") scrawId: Integer,
-                               @RequestParam("scraw_url") scrawURL: String,
-                               @RequestParam("scraw_persist_type") scrawPersistType: String,
-                               @RequestParam("dbName") dbName: String,
-                               @RequestParam("tableName") tableName: String): String = {
-      scrawConfigService.updateScrawBaseConfig(scrawId,scrawURL, scrawPersistType, dbName, tableName)
-      JSONUtils.object2JsonString(scrawConfigService.selectByScrawId(scrawId))
-    }*/
+/*
+  /**
+   * 更新进本配置信息
+   *
+   * @param scrawId
+   * @param scrawURL
+   * @param scrawPersistType
+   * @param dbName
+   * @param tableName
+   * @return
+   */
+  @CrossOrigin
+  @GetMapping(Array("/updateScrawBaseConfig"))
+  def updateScrawBaseConfig(
+                             @RequestParam("scraw_id") scrawId: Integer,
+                             @RequestParam("scraw_url") scrawURL: String,
+                             @RequestParam("scraw_persist_type") scrawPersistType: String,
+                             @RequestParam("dbName") dbName: String,
+                             @RequestParam("tableName") tableName: String): String = {
+    scrawConfigService.updateScrawBaseConfig(scrawId, scrawURL, scrawPersistType, dbName, tableName)
+    JSONUtils.object2JsonString(scrawConfigService.selectByScrawId(scrawId))
+  }*/
 
   @CrossOrigin
   @GetMapping(Array("/createScrawName"))
