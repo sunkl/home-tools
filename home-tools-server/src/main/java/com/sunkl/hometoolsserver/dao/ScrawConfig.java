@@ -18,7 +18,9 @@ public class ScrawConfig {
     private String scrawResultSchema;
 
     private String scawPersistConfig;
-
+    private String scrawActionStartTime;
+    private String actionFrequencyNum;
+    private String actionFrequencyUnit;
     private String createTime;
 
     private String updateTime;
@@ -95,6 +97,30 @@ public class ScrawConfig {
         this.updateTime = updateTime == null ? null : updateTime.trim();
     }
 
+    public String getScrawActionStartTime() {
+        return scrawActionStartTime;
+    }
+
+    public void setScrawActionStartTime(String scrawActionStartTime) {
+        this.scrawActionStartTime = scrawActionStartTime;
+    }
+
+    public String getActionFrequencyNum() {
+        return actionFrequencyNum;
+    }
+
+    public void setActionFrequencyNum(String actionFrequencyNum) {
+        this.actionFrequencyNum = actionFrequencyNum;
+    }
+
+    public String getActionFrequencyUnit() {
+        return actionFrequencyUnit;
+    }
+
+    public void setActionFrequencyUnit(String actionFrequencyUnit) {
+        this.actionFrequencyUnit = actionFrequencyUnit;
+    }
+
     public ScrawConfig(String scrawName) {
         this.scrawName = scrawName;
         this.scrawParams = "[]";
@@ -102,5 +128,49 @@ public class ScrawConfig {
         this.scawPersistConfig = "{}";
         this.createTime = TimeUtils.getCurrentDateTime();
         this.updateTime = TimeUtils.getCurrentDateTime();
+    }
+
+    public ScrawConfig(String scrawName, String scrawDesc, String scrawBaseUrl, String scrawParams, String scrawResultSchema, String scawPersistConfig, String scrawActionStartTime, String actionFrequencyNum, String actionFrequencyUnit) {
+        this.scrawName = scrawName;
+        this.scrawDesc = scrawDesc;
+        this.scrawBaseUrl = scrawBaseUrl;
+        this.scrawParams = scrawParams;
+        this.scrawResultSchema = scrawResultSchema;
+        this.scawPersistConfig = scawPersistConfig;
+        this.scrawActionStartTime = scrawActionStartTime;
+        this.actionFrequencyNum = actionFrequencyNum;
+        this.actionFrequencyUnit = actionFrequencyUnit;
+        this.createTime = TimeUtils.getCurrentDateTime();
+        this.updateTime = TimeUtils.getCurrentDateTime();
+    }
+
+    public ScrawConfig(Integer scrawId, String scrawName, String scrawDesc, String scrawBaseUrl, String scrawParams, String scrawResultSchema, String scawPersistConfig, String scrawActionStartTime, String actionFrequencyNum, String actionFrequencyUnit) {
+        this.scrawId = scrawId;
+        this.scrawName = scrawName;
+        this.scrawDesc = scrawDesc;
+        this.scrawBaseUrl = scrawBaseUrl;
+        this.scrawParams = scrawParams;
+        this.scrawResultSchema = scrawResultSchema;
+        this.scawPersistConfig = scawPersistConfig;
+        this.scrawActionStartTime = scrawActionStartTime;
+        this.actionFrequencyNum = actionFrequencyNum;
+        this.actionFrequencyUnit = actionFrequencyUnit;
+        this.createTime = TimeUtils.getCurrentDateTime();
+        this.updateTime = TimeUtils.getCurrentDateTime();
+    }
+
+    public ScrawConfig(Integer scrawId, String scrawName, String scrawDesc, String scrawBaseUrl, String scrawParams, String scrawResultSchema, String scawPersistConfig, String scrawActionStartTime, String actionFrequencyNum, String actionFrequencyUnit, String createTime, String updateTime) {
+        this.scrawId = scrawId;
+        this.scrawName = scrawName;
+        this.scrawDesc = scrawDesc;
+        this.scrawBaseUrl = scrawBaseUrl;
+        this.scrawParams = scrawParams;
+        this.scrawResultSchema = scrawResultSchema;
+        this.scawPersistConfig = scawPersistConfig;
+        this.scrawActionStartTime = scrawActionStartTime;
+        this.actionFrequencyNum = actionFrequencyNum;
+        this.actionFrequencyUnit = actionFrequencyUnit;
+        this.createTime = createTime;
+        this.updateTime = updateTime;
     }
 }

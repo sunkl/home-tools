@@ -104,7 +104,10 @@ CREATE TABLE `scraw_config` (
   `scraw_params` text COLLATE utf8_bin COMMENT '参数',
   `scraw_result_schema` text COLLATE utf8_bin COMMENT '结果列',
   `scaw_persist_config` text COLLATE utf8_bin,
+  `scraw_action_start_time` varchar(45) COLLATE utf8_bin DEFAULT NULL COMMENT '触发时间',
+  `action_frequency_num` varchar(45) COLLATE utf8_bin DEFAULT NULL COMMENT '触发时间频率时间数据',
+  `action_frequency_unit` varchar(45) COLLATE utf8_bin DEFAULT NULL COMMENT '触发时间单位',
   `create_time` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `update_time` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`scraw_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='  scraw_desc\n  scraw_action_start_time\n  action_frequency_num\n  action_frequency_unit';
